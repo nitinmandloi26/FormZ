@@ -14,7 +14,7 @@ const HeroSection = () => {
                     <Content1 classDynamic="max-w-[290px] md:max-w-[830px] mb-1.5 md:mb-0" content="Book trusted cleaning professionals for your home, office, or business. Simply choose your service, pick a time, and enjoy spotless results."/>
                     <Button1 href="#" text="Book Now"/>
                     <div className="flex items-center justify-center gap-2.5 md:gap-4 mb-2 md:mb-0">
-                        <Image src="/images/credit-card.svg" width={22} height={20} className="max-w-[13px] md:max-w-[22px]" alt="credit card" />
+                        <Image src="./images/credit-card.svg" width={22} height={20} className="max-w-[13px] md:max-w-[22px]" alt="credit card" />
                         <span className="text-xs md:text-base">No credit card needed</span>
                     </div>
                     <Image src="/images/calc-1.png" width={1024} height={400} alt="Calc"/>
