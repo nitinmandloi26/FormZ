@@ -10,7 +10,7 @@ const HeroSection = () => {
         <section className="w-full py-6 md:py-15 justify-center items-center">
             <div className="max-w-[1332px] mx-auto px-5.5 md:px-4">
                 <div className="flex flex-col gap-2 md:gap-7 items-center text-center">
-                    <Heading1 classDynamic="max-w-[258px] md:max-w-[600px]" title="Professional at Your Fingertips"/>
+                    <Heading1 classDynamic="max-w-[258px] md:max-w-[600px]" title="wwProfessional at Your Fingertips"/>
                     <Content1 classDynamic="max-w-[290px] md:max-w-[830px] mb-1.5 md:mb-0" content="Book trusted cleaning professionals for your home, office, or business. Simply choose your service, pick a time, and enjoy spotless results."/>
                     <Button1 href="#" text="Book Now"/>
                     <div className="flex items-center justify-center gap-2.5 md:gap-4 mb-2 md:mb-0">
