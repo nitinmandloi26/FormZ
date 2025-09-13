@@ -2,12 +2,12 @@ import { Heading2,Content1,Button1 } from "./typography";
 import Image from "next/image";
 const CleaningServices = () => {
     const cards = [
-        {src:'/images/residental.png',title:'Residential Cleaning',content:'Complete home cleaning services'},
-        {src:'/images/commercial.png',title:'Commercial Cleaning',content:'Office and business cleaning solutions'},
-        {src:'/images/deep.png',title:'Deep Cleaning',content:'Thorough top-to-bottom cleaning'},
-        {src:'/images/carpet.png',title:'Carpet & Upholstery',content:'Specialized fabric cleaning services'},
-        {src:'/images/window.png',title:'Window Cleaning',content:'Crystal clear window solutions'},
-        {src:'/images/move.png',title:'Move-in/Move-out',content:'Complete transition cleaning'}
+        {src:'images/residental.png',title:'Residential Cleaning',content:'Complete home cleaning services'},
+        {src:'images/commercial.png',title:'Commercial Cleaning',content:'Office and business cleaning solutions'},
+        {src:'images/deep.png',title:'Deep Cleaning',content:'Thorough top-to-bottom cleaning'},
+        {src:'images/carpet.png',title:'Carpet & Upholstery',content:'Specialized fabric cleaning services'},
+        {src:'images/window.png',title:'Window Cleaning',content:'Crystal clear window solutions'},
+        {src:'images/move.png',title:'Move-in/Move-out',content:'Complete transition cleaning'}
     ];
     return(
         <div className="w-full bg-[#F0F0F0] py-5.5 md:py-12.5">

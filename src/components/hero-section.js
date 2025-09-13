@@ -2,9 +2,9 @@ import { Heading1,Content1,Content2,Button1,Heading2 } from "./typography";
 import Image from "next/image";
 const HeroSection = () => {
     const steps = [
-        {icon:"/images/credit-card.svg",title:"1. Select Cleaning Type",content:"Choose from residential, commercial, deep cleaning, or specialized services."},
-        {icon:"/images/calender.svg",title:"2. Pick a Time & Date",content:"Select a convenient time slot that fits, perfectly into your busy schedule."},
-        {icon:"/images/mark.svg",title:"3. Relax & Enjoy",content:"Our vetted cleaning professionals will arrive on time and deliver spotless results."}
+        {icon:"images/credit-card.svg",title:"1. Select Cleaning Type",content:"Choose from residential, commercial, deep cleaning, or specialized services."},
+        {icon:"images/calender.svg",title:"2. Pick a Time & Date",content:"Select a convenient time slot that fits, perfectly into your busy schedule."},
+        {icon:"images/mark.svg",title:"3. Relax & Enjoy",content:"Our vetted cleaning professionals will arrive on time and deliver spotless results."}
     ];
     return(
         <section className="w-full py-6 md:py-15 justify-center items-center">
@@ -14,10 +14,10 @@ const HeroSection = () => {
                     <Content1 classDynamic="max-w-[290px] md:max-w-[830px] mb-1.5 md:mb-0" content="Book trusted cleaning professionals for your home, office, or business. Simply choose your service, pick a time, and enjoy spotless results."/>
                     <Button1 href="#" text="Book Now"/>
                     <div className="flex items-center justify-center gap-2.5 md:gap-4 mb-2 md:mb-0">
-                        <Image src="./images/credit-card.svg" width={22} height={20} className="max-w-[13px] md:max-w-[22px]" alt="credit card" />
+                        <Image src="images/credit-card.svg" width={22} height={20} className="max-w-[13px] md:max-w-[22px]" alt="credit card" />
                         <span className="text-xs md:text-base">No credit card needed</span>
                     </div>
-                    <Image src="/images/calc-1.png" width={1024} height={400} alt="Calc"/>
+                    <Image src="images/calc-1.png" width={1024} height={400} alt="Calc"/>
                 </div>
 
                 <div className="flex flex-col pt-15 text-center">
