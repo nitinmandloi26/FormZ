@@ -20,7 +20,7 @@ const HeroSection = () => {
                     <Image src="images/calc-1.png" width={1024} height={400} alt="Calc"/>
                 </div>
 
-                <div className="flex flex-col pt-15 text-center">
+                <div className="flex flex-col pt-8 md:pt-15 text-center">
                     <Heading2 classDynamic="max-w-[268px] mx-auto md:max-w-[100%] mb-3" title="A Simpler Way to Book Cleaning"/>
                     <Content1 content="Get your space cleaned in just three simple steps." />
                     <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-2.5 md:gap-6.75 mt-4 md:mt-7.5">
