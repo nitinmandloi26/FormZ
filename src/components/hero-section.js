@@ -17,7 +17,8 @@ const HeroSection = () => {
                         <Image src="images/credit-card.svg" width={22} height={20} className="max-w-[13px] md:max-w-[22px]" alt="credit card" />
                         <span className="text-xs md:text-base">No credit card needed</span>
                     </div>
-                    <Image src="images/calc-1.png" width={1024} height={400} alt="Calc"/>
+                    <Image className="hidden md:block" src="images/calc-1.png" width={1024} height={400} alt="Calc"/>
+                    <Image className="md:hidden block" src="images/calc-1-mob.png" width={396} height={399} alt="Calc Mob"/>
                 </div>
 
                 <div className="flex flex-col pt-8 md:pt-15 text-center">
