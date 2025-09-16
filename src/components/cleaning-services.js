@@ -1,19 +1,11 @@
 import { Heading2,Content1,Button1 } from "./typography";
 import Image from "next/image";
-const CleaningServices = () => {
-    const cards = [
-        {src:'images/residental.png',title:'Residential Cleaning',content:'Complete home cleaning services'},
-        {src:'images/commercial.png',title:'Commercial Cleaning',content:'Office and business cleaning solutions'},
-        {src:'images/deep.png',title:'Deep Cleaning',content:'Thorough top-to-bottom cleaning'},
-        {src:'images/carpet.png',title:'Carpet & Upholstery',content:'Specialized fabric cleaning services'},
-        {src:'images/window.png',title:'Window Cleaning',content:'Crystal clear window solutions'},
-        {src:'images/move.png',title:'Move-in/Move-out',content:'Complete transition cleaning'}
-    ];
+const CleaningServices = ({heading,content,cards,buttonLabel,buttonLink}) => {
     return(
         <div className="w-full bg-[#F0F0F0] py-5.5 md:py-12.5">
             <div className="max-w-[1332px] mx-auto px-4">
-               <Heading2 classDynamic="text-center max-w-[268px] mx-auto md:max-w-[100%] mb-2 md:mb-3" title="Choose Your Cleaning Service"/>
-               <Content1 classDynamic="text-center mb-4 md:mb-8" content="Select the perfect cleaning solution for your needs." />
+               <Heading2 classDynamic="text-center max-w-[268px] mx-auto md:max-w-[100%] mb-2 md:mb-3" title={heading}/>
+               <Content1 classDynamic="text-center mb-4 md:mb-8" content={content} />
                <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 md:gap-9">
                  {cards.map((card) => (
                     <div key={card.title} className="relative w-full rounded-[21px] overflow-hidden">
@@ -27,7 +19,7 @@ const CleaningServices = () => {
                  ))} 
                </div>
                <div className="text-center pt-4 md:pt-9">
-                   <Button1 href="#" text="View All Cleaning Services" />
+                   <Button1 href={buttonLink} text={buttonLabel} />
                </div>
             </div>
         </div>

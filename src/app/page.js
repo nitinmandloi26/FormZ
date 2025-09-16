@@ -10,10 +10,45 @@ export default function HomePage() {
     <div className="flex flex-col min-h-screen">
       <Header/>
       <main className="w-full">
-        <HeroSection/>
-        <CleaningServices/>
-        <Testimonial />
-        <Cta />
+        <HeroSection 
+          heading ="Professional at Your Fingertips"
+          content ="Book trusted cleaning professionals for your home, office, or business. Simply choose your service, pick a time, and enjoy spotless results."
+          buttonLabel = "Book Now"
+          buttonLink = "/services"
+          cardImg = "images/credit-card.svg"
+          cardCont = "No credit card needed"
+          deskDashBoardImg = "images/calc-1.png"
+          mobDashBoardImg = "images/calc-1-mob.png"
+          stepHeading = "A Simpler Way to Book Cleaning"
+          stepContent = "Get your space cleaned in just three simple steps."
+          steps = {[
+            {icon:"images/credit-card.svg",title:"1. Select Cleaning Type",content:"Choose from residential, commercial, deep cleaning, or specialized services."},
+            {icon:"images/calender.svg",title:"2. Pick a Time & Date",content:"Select a convenient time slot that fits, perfectly into your busy schedule."},
+            {icon:"images/mark.svg",title:"3. Relax & Enjoy",content:"Our vetted cleaning professionals will arrive on time and deliver spotless results."}
+          ]}
+        />
+        <CleaningServices 
+          heading="Choose Your Cleaning Service" 
+          content="Select the perfect cleaning solution for your needs." 
+          cards = {[
+            {src:'images/residental.png',title:'Residential Cleaning',content:'Complete home cleaning services'},
+            {src:'images/commercial.png',title:'Commercial Cleaning',content:'Office and business cleaning solutions'},
+            {src:'images/deep.png',title:'Deep Cleaning',content:'Thorough top-to-bottom cleaning'},
+            {src:'images/carpet.png',title:'Carpet & Upholstery',content:'Specialized fabric cleaning services'},
+            {src:'images/window.png',title:'Window Cleaning',content:'Crystal clear window solutions'},
+            {src:'images/move.png',title:'Move-in/Move-out',content:'Complete transition cleaning'}
+          ]}
+          buttonLabel = "View All Cleaning Services"
+          buttonLink ="#"
+          />
+        <Testimonial 
+          heading="Trusted by Thousands Worldwide" 
+          content="See what our happy customers are saying about cleanly."
+          items = {[
+            {src:'images/sarah.jpg',name:'Sarah L.',position:'Homeowner',content:'"Cleanly has been a lifesaver! The booking process is incredibly simple and the quality of cleaning is consistently top-notch. My house has never looked better."'},
+            {src:'images/michael.jpg',name:'Michael B.',position:'Office Manager',content:'"We use Cleanly for our weekly office cleanings. The platform makes it easy to manage schedules and payments. Our workspace is always spotless and professional."'},
+            {src:'images/jessica.jpg',name:'Jessica P.',position:'Busy Professional',content:'"The deep cleaning service was amazing! They got into every corner and crevice. I love coming home to a perfectly clean space without lifting a finger."'}
+          ]} />
       </main>
       <Footer/>
     </div>
