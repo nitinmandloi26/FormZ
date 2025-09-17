@@ -2,18 +2,25 @@
 
 const homeConfig = {
   heroSection: {
-    heading: "Professional at Your Fingertips",
-    content:
+    hero:{
+      heading: "Professional at Your Fingertips",
+      content:
       "Book trusted cleaning professionals for your home, office, or business. Simply choose your service, pick a time, and enjoy spotless results.",
-    buttonLabel: "Book Now",
-    buttonLink: "/services",
-    cardImg: "images/credit-card.svg",
-    cardCont: "No credit card needed",
-    deskDashBoardImg: "images/calc-1.png",
-    mobDashBoardImg: "images/calc-1-mob.png",
-    stepHeading: "A Simpler Way to Book Cleaning",
-    stepContent: "Get your space cleaned in just three simple steps.",
-    steps: [
+      buttonLabel: "Book Now",
+      buttonLink: "/services",
+    },
+    card:{
+      img: "images/credit-card.svg",
+      text: "No credit card needed",
+    },
+    image:{
+      desktop:"images/calc-1.png",
+      mobile:"images/calc-1-mob.png"
+    },
+    steps:{
+      heading: "A Simpler Way to Book Cleaning",
+      content: "Get your space cleaned in just three simple steps.",
+      items: [
       {
         icon: "images/credit-card.svg",
         title: "1. Select Cleaning Type",
@@ -32,7 +39,8 @@ const homeConfig = {
         content:
           "Our vetted cleaning professionals will arrive on time and deliver spotless results.",
       },
-    ],
+    ]
+    }
   },
 
   cleaningServices: {
