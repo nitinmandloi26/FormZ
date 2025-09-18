@@ -7,7 +7,7 @@ const HeroSection = ({hero, card, image, steps}) => {
                 <div className="flex flex-col gap-2 md:gap-7 items-center text-center">
                     <Heading level="1" className="max-w-[258px] md:max-w-[600px]">{hero.heading}</Heading>
                     <Content className={`max-w-[290px] md:max-w-[830px] mb-1.5 md:mb-0`}>{hero.content}</Content>
-                    <Button>{hero.buttonLabel}</Button>
+                    <Button href={hero.buttonLink}>{hero.buttonLabel}</Button>
                     <div className="flex items-center justify-center gap-2.5 md:gap-4 mb-2 md:mb-0">
                         <Image src={card.img} width={22} height={20} className="max-w-[13px] md:max-w-[22px]" alt="credit card" />
                         <span className="text-xs md:text-base">{card.text}</span>
