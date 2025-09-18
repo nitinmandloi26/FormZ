@@ -1,29 +1,28 @@
 "use client";
 
 import { useState } from "react";
-import { Heading1, Content1 } from "./typography";
+import { Heading, Content, Button } from "./ui";
 import Image from "next/image";
 
-const ServicesPage = ({ hero, services }) => {
+const ServicesPage = ({ hero, services, fields}) => {
   const [activeService, setActiveService] = useState({ index: null, service: null });
+  const [activeFrequency, setFrequency] = useState({index:null, option: null});
 
   const handleClick = (service, index) => {
     setActiveService({ index, service });
   };
+
+  const handleFrequency = (option,index) => {
+    setFrequency({index,option});
+  }
 
   return (
     <div className="w-full py-6 md:py-15 justify-center items-center">
       <div className="max-w-[1332px] mx-auto px-5.5 md:px-4">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <Heading1
-            classDynamic="max-w-[258px] md:max-w-[600px] mb-5"
-            title={hero.heading}
-          />
-          <Content1
-            classDynamic="max-w-[290px] md:max-w-[830px] mb-1.5 mx-auto md:mb-0"
-            content={hero.content}
-          />
+          <Heading level={1} className={`max-w-[258px] md:max-w-[600px] mb-5 mx-auto`}>{hero.heading}</Heading>
+          <Content className={`max-w-[290px] md:max-w-[830px] mb-1.5 mx-auto md:mb-0`}>{hero.content}</Content>
         </div>
 
         {/* Services Grid */}
@@ -88,25 +87,43 @@ const ServicesPage = ({ hero, services }) => {
 
           {/* Service Location Input */}
           <div className="mb-10">
-            <label className="text-[28px] font-semibold text-[#1A1A1A] block mb-4">
-              Service Location
+            <label className="text-[28px] font-semibold text-[#1A1A1A] block mb-6">
+              {fields.location.label}
             </label>
             <span className="block relative">
                 <input
                     type="text"
-                    placeholder="Enter your address or zip code"
+                    placeholder={fields.location.placeholder}
                     className="w-full border-2 border-[#E5E5E5] rounded-[12px] font-normal text-[20px] 
                          placeholder:text-[#ADAEBC] text-[#666666] leading-9 px-6 py-3"
                 />
-                <Image className="absolute right-7 top-1/2 -translate-y-1/2" src="images/services/location.svg" width={19} height={26} alt="map" />
+                <Image className="absolute right-7 top-1/2 -translate-y-1/2" src={fields.location.suffix} width={19} height={26} alt="map" />
             </span>
           </div>
 
           <div className="mb-10">
-            <label className="text-[28px] font-semibold text-[#1A1A1A] block mb-4">
-              Cleaning Frequency
+            <label className="text-[28px] font-semibold text-[#1A1A1A] block mb-6">
+              {fields.frequency.label}
             </label>
-            
+            <div className="grid grid-cols-4 gap-6.5 text-center">
+              {fields.frequency.options.map((option,index)=>{
+                const isActive = activeFrequency.index === index;
+                return (
+                <div key={index} onClick={()=> handleFrequency(option,index)} className={`cursor-pointer border-3 rounded-[12px] p-7 
+                  ${isActive ? "bg-[#1a1a1a] border-[#1A1A1A] text-[#fff]" : "border-[#E5E5E5]"}`}>
+                  <label className={`cursor-pointerzs block text-[25px] text-[#1A1A1A] font-medium mb-1.5
+                    ${isActive ? "text-[#FFFFFF]" : "text-[#1A1A1A]"}
+                  `}>{option.label}</label>
+                  <span className="text-[22px] font-normal block">{option.value}</span>
+                </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="flex justify-end gap-7.5">
+            <Button type="button">{fields.buttonShedule}</Button>
+            <Button type="button" variant={`lightGray`}>{fields.buttonQuote}</Button>
           </div>
 
 

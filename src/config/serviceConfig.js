@@ -40,7 +40,37 @@ const serviceConfig = {
             content:"Complete cleaning for property transitions and new beginnings.",
             tags:["Deep Clean","Sanitization","Move-ready"]
         }
-    ]
+    ],
+    fields:{
+        location:{
+            label:"Service Location",
+            placeholder:"Enter your address or zip code",
+            suffix:"images/services/location.svg"
+        },
+        frequency:{
+            label:"Cleaning Frequency",
+            options:[
+                {
+                    label:"One-time",
+                    value:"Single service"
+                },
+                {
+                    label:"Weekly",
+                    value:"Every week"
+                },
+                {
+                    label:"Bi-weekly",
+                    value:"Every 2 weeks"
+                },
+                {
+                    label:"Monthly",
+                    value:"Once a month"
+                }
+            ]
+        },
+        buttonShedule: "Continue to Schedule",
+        buttonQuote:"Get Instant Quote"
+    }
 }
 
 export default serviceConfig;

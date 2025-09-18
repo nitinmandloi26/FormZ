@@ -1,11 +1,13 @@
-import { Heading2,Content1,Button1 } from "./typography";
+import { Heading, Content, Button } from "./ui";
 import Image from "next/image";
 const CleaningServices = ({heading,content,cards,buttonLabel,buttonLink}) => {
     return(
         <div className="w-full bg-[#F0F0F0] py-5.5 md:py-12.5">
             <div className="max-w-[1332px] mx-auto px-4">
-               <Heading2 classDynamic="text-center max-w-[268px] mx-auto md:max-w-[100%] mb-2 md:mb-3" title={heading}/>
-               <Content1 classDynamic="text-center mb-4 md:mb-8" content={content} />
+              <div className="text-center">
+                <Heading className={`mb-2 md:mb-3`}>{heading}</Heading>
+                <Content className={`mb-4 md:mb-8`}>{content}</Content>
+              </div>
                <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 md:gap-9">
                  {cards.map((card) => (
                     <div key={card.title} className="relative w-full rounded-[21px] overflow-hidden">
@@ -19,7 +21,7 @@ const CleaningServices = ({heading,content,cards,buttonLabel,buttonLink}) => {
                  ))} 
                </div>
                <div className="text-center pt-4 md:pt-9">
-                   <Button1 href={buttonLink} text={buttonLabel} />
+                   <Button>{buttonLabel}</Button>
                </div>
             </div>
         </div>

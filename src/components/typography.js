@@ -23,7 +23,7 @@ export const Content2 = ({content,classDynamic}) => {
     );
 }
 
-export const Button1 = ({href,text,classDynamic}) => {
+export const Button1 = ({href,text,classDynamic=""}) => {
     return(
         <Link href={href} className={`text-[10px] md:text-[16px] bg-[#1a1a1a] text-white px-3.75 md:px-7 md:py-3.5 py-2 inline-flex  rounded-full font-semibold hover:bg-neutral-700 transition ${classDynamic}`}>{text}</Link>
     );
