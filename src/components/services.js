@@ -1,20 +1,68 @@
 "use client";
 
-import { useState } from "react";
-import { Heading, Content, Button } from "./ui";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Heading, Content, Button, Errors } from "./ui";
 import Image from "next/image";
 
-const ServicesPage = ({ hero, services, fields}) => {
+const ServicesPage = ({ hero, services, fields,errorMsg}) => {
+  const router = useRouter();
   const [activeService, setActiveService] = useState({ index: null, service: null });
   const [activeFrequency, setFrequency] = useState({index:null, option: null});
+  const[location, setLocation] = useState("");
+  const[errors, setErrors] = useState({service:"", frequency:"", location:""});
+
+  useEffect(() => {
+    const stored = sessionStorage.getItem("serviceResults");
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (parsed.service) setActiveService(parsed.service);
+      if (parsed.frequency) setFrequency(parsed.frequency);
+      if (parsed.location) setLocation(parsed.location);
+    }
+  }, []);
 
   const handleClick = (service, index) => {
     setActiveService({ index, service });
+    if(errors.service){
+      setErrors((prev) => ({...prev, service:""}));
+    }
   };
 
   const handleFrequency = (option,index) => {
     setFrequency({index,option});
+    if(errors.frequency){
+      setErrors((prev) => ({...prev, frequency:""}));
+    }
   }
+
+  const handleShedule = () =>{
+    let newErrors = {service:"", frequency:"", location:""};
+    if(!activeService.service){
+      newErrors.service = errorMsg.service;
+    }
+    if(!activeFrequency.option){
+      newErrors.frequency = errorMsg.frequency;
+    }
+    if(!location.trim()){
+      newErrors.location = errorMsg.location;
+    }
+    setErrors(newErrors);
+    if (!newErrors.service && !newErrors.frequency && !newErrors.location) {
+        const serviceResults = {
+          service: activeService,
+          location: location,
+          frequency: activeFrequency
+        };
+
+        sessionStorage.setItem("serviceResults", JSON.stringify(serviceResults));
+
+      router.push('/booking-slot');
+    }
+  }
+  
+  
+
 
   return (
     <div className="w-full py-6 md:py-15 justify-center items-center">
@@ -27,7 +75,8 @@ const ServicesPage = ({ hero, services, fields}) => {
 
         {/* Services Grid */}
         <div className="border-3 border-[#E5E5E5] rounded-[20px] px-12 py-12">
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-2.5 md:gap-9.5 mb-10">
+          <div className="mb-10">
+             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-2.5 md:gap-9.5">
             {services.map((service, index) => {
               const isActive = activeService.index === index;
 
@@ -83,6 +132,10 @@ const ServicesPage = ({ hero, services, fields}) => {
                 </div>
               );
             })}
+             </div>
+             {errors.service && (
+              <Errors>{errors.service}</Errors>
+             )}
           </div>
 
           {/* Service Location Input */}
@@ -96,9 +149,18 @@ const ServicesPage = ({ hero, services, fields}) => {
                     placeholder={fields.location.placeholder}
                     className="w-full border-2 border-[#E5E5E5] rounded-[12px] font-normal text-[20px] 
                          placeholder:text-[#ADAEBC] text-[#666666] leading-9 px-6 py-3"
+                    value={location} 
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setLocation(value);
+                      setErrors((prev) => ({...prev,location:value.trim() ? "" : errorMsg.location}));
+                    } }
                 />
                 <Image className="absolute right-7 top-1/2 -translate-y-1/2" src={fields.location.suffix} width={19} height={26} alt="map" />
             </span>
+            {errors.location && (
+              <Errors>{errors.location}</Errors>
+             )}
           </div>
 
           <div className="mb-10">
@@ -119,10 +181,13 @@ const ServicesPage = ({ hero, services, fields}) => {
                 );
               })}
             </div>
+            {errors.frequency && (
+              <Errors>{errors.frequency}</Errors>
+             )}
           </div>
 
           <div className="flex justify-end gap-7.5">
-            <Button type="button">{fields.buttonShedule}</Button>
+            <Button type="button" onClick={handleShedule}>{fields.buttonShedule}</Button>
             <Button type="button" variant={`lightGray`}>{fields.buttonQuote}</Button>
           </div>
 

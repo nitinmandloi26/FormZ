@@ -45,7 +45,7 @@ const serviceConfig = {
         location:{
             label:"Service Location",
             placeholder:"Enter your address or zip code",
-            suffix:"images/services/location.svg"
+            suffix:"images/services/location.svg",
         },
         frequency:{
             label:"Cleaning Frequency",
@@ -70,6 +70,11 @@ const serviceConfig = {
         },
         buttonShedule: "Continue to Schedule",
         buttonQuote:"Get Instant Quote"
+    },
+    errorMsg:{
+        service:"Please select a service.",
+        frequency: "Please select a frequency.",
+        location:"Please enter a location."
     }
 }
 
