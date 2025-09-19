@@ -3,6 +3,9 @@
 import {useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Loader } from "./ui";
+import Calendar from "react-calendar";
+import 'react-calendar/dist/Calendar.css';
+
 
 const BookingSlotsPage = () => {
    const router = useRouter();
@@ -26,6 +29,7 @@ const BookingSlotsPage = () => {
 
    return (
     <div className="">
+        <Calendar  />
         <pre>{JSON.stringify(serviceResults, null, 2)}</pre>
     </div>
    );
