@@ -5,15 +5,19 @@ const heading = tv({
     variants:{
         level:{
             1:"text-[26px] md:text-[50px] leading-8 md:leading-[4rem]",
-            2:"text-[24px] md:text-[36px] leading-8 md:leading-13.5 md:font-bold"
-        }
+            2:"text-[24px] md:text-[36px] leading-8 md:leading-13.5 md:font-bold",
+            3:""
+        },
+        size:{
+            1:"text-[27px] font-semibold"
+        },
     },
     defaultVariants:{
         level:2
     }
 });
 
-export const Heading = ({level=2, className,  children }) => {
+export const Heading = ({level=2, size, className,  children }) => {
    const Tag =  `h${level}`;
-   return <Tag className={heading({level,className})}>{children }</Tag>;
+   return <Tag className={heading({level,size,className})}>{children }</Tag>;
 }

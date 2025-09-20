@@ -4,7 +4,7 @@ const errors = tv({
     base:"",
     variants:{
         variant:{
-            1:"text-red-500 text-[17px] mt-2 font-bold"
+            1:"text-red-500 text-[12px] md:text-[17px] mt-2 font-bold"
         }
     },
     defaultVariants:{

@@ -57,7 +57,7 @@ const ServicesPage = ({ hero, services, fields,errorMsg}) => {
 
         sessionStorage.setItem("serviceResults", JSON.stringify(serviceResults));
 
-      router.push('/booking-slot');
+      router.push('/booking-slots');
     }
   }
   

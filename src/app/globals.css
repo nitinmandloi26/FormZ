@@ -24,3 +24,43 @@ body {
   color: var(--foreground);
   font-family:var(--font-sans);
 }
+
+.react-calendar__navigation__label__labelText{
+  @apply text-[22px] font-semibold text-[#1A1A1A] font-sans;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  @apply text-[#666666] text-[16px] font-medium font-sans capitalize min-h-13.5 justify-center items-center flex;
+}
+
+.react-calendar__month-view__weekdays__weekday abbr{
+  @apply no-underline;
+}
+
+.react-calendar__tile{
+  @apply text-[#1A1A1A] text-[18px] font-normal font-sans min-h-13.5;
+}
+
+.react-calendar__month-view__days__day--neighboringMonth, .react-calendar__decade-view__years__year--neighboringDecade, .react-calendar__century-view__decades__decade--neighboringCentury{
+  @apply text-[#666666] opacity-50;
+}
+
+.react-calendar__navigation{
+  @apply flex mb-7;
+}
+
+.react-calendar__month-view__weekdays{
+  @apply text-center gap-2.25;
+}
+
+.react-calendar__tile--active{
+  @apply bg-[#1A1A1A] text-[#fff] rounded-[9px];
+}
+
+.react-calendar__month-view__weekdays__weekday,.react-calendar__month-view__days__day{
+  flex: 1 0 calc(14.2857% - 9px) !important;
+}
+
+.react-calendar__month-view__days{
+ @apply gap-2.5;
+}
