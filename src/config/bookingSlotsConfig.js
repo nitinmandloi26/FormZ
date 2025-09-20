@@ -9,7 +9,7 @@ const bookingSlotsConfig = {
         timeslots:[
             {
                 label:"Morning",
-                slot:[
+                periods:[
                     {
                         time:"8:00 AM",
                         check:"available"
@@ -30,7 +30,7 @@ const bookingSlotsConfig = {
             },
             {
                 label:"Afternoon",
-                slot:[
+                periods:[
                     {
                         time:"12:00 PM",
                         check:"available"
@@ -51,7 +51,7 @@ const bookingSlotsConfig = {
             },
             {
                 label:"Evening",
-                slot:[
+                periods:[
                     {
                         time:"4:00 PM",
                         check:"available"

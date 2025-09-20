@@ -54,9 +54,25 @@ const BookingSlotsPage = ({hero,slots}) => {
           </div>
           <div className="border-1 border-[#E5E5E5] rounded-[23px] p-9.25">
             <Heading level={3} size={1} className={`mb-6.75`}>{slots.availableSlot}</Heading>
-            <Content variant={2}>Monday, January 15, 2024</Content>
-            <div className="">
-              
+            <Content variant={2} className={`mb-6`}>Monday, January 15, 2024</Content>
+            <div className="grid grid-cols-1 gap-6">
+              {slots?.timeslots?.map((timeslot,index) => {
+                return (
+                  <div key={index} className="">
+                    <Heading level={4} size={2} className="mb-5">{timeslot.label}</Heading>
+                    <div className="grid grid-cols-2 gap-3.5">
+                    {timeslot.periods?.map((period, idx) => {
+                      return (
+                        <div key={idx} className="border border-[#E5E5E5] rounded-[14px] p-5 text-center">
+                          <span className="block text-[#1a1a1a] text-[19px] font-medium">{period.time}</span>
+                          <span className="block text-[#666] text-[17px]">{period.check}</span>
+                        </div>
+                      );
+                    })}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
