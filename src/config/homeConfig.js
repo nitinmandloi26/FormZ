@@ -7,7 +7,7 @@ const homeConfig = {
       content:
       "Book trusted cleaning professionals for your home, office, or business. Simply choose your service, pick a time, and enjoy spotless results.",
       buttonLabel: "Book Now",
-      buttonLink: "/services",
+      buttonLink: "/booking",
     },
     card:{
       img: "images/credit-card.svg",
