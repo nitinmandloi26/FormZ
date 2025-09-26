@@ -2,7 +2,7 @@ import Link from "next/link";
 import { tv } from "tailwind-variants";
 
 const button = tv({
-    base:`text-[10px] md:text-[16px] px-3.75 md:px-7 md:py-3.5 py-2 
+    base:`text-[12px] md:text-[16px] px-3.75 md:px-7 md:py-3.5 py-2 
     font-semibold inline-flex rounded-full transition cursor-pointer`,
     variants:{
         variant:{
