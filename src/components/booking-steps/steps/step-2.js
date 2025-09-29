@@ -2,15 +2,68 @@
 
 import { useState } from "react";
 import Calendar from "react-calendar";
-import { Heading, Content, Loader } from "@/components/ui";
+import { Heading, Content, Button, formatDate } from "@/components/ui";
+import Image from "next/image";
 
 
 const Step2 = ({hero,slots,formData, handleChange, nextStep, prevStep }) => {
-   const [selectedDate, setSelectedDate] = useState(formData.bookingStep?.date || null);
-   const [selectedSlot, setSelectedSlot] = useState(formData.bookingStep?.timeSlot || null);
-
-
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
   
+  const [currentDate, setCurrentDate] = useState(tomorrow);
+  const [currentSlot, setCurrentSlot] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(null);
+  
+  const bookings = formData.booking || [];
+
+  const updatedBookings = [...bookings];
+
+  const handleDateChange = (date) => {
+    setCurrentDate(date);
+    setCurrentSlot(null); // reset slot when date changes
+    setCurrentIndex(null);
+    if (updatedBookings.length > 0) {
+      updatedBookings[updatedBookings.length - 1] = {
+        ...updatedBookings[updatedBookings.length - 1],
+       date: date
+      }
+    }
+    handleChange({ booking: updatedBookings });
+
+  };
+
+
+  const hadleTimeClick = (period,combinedIndex) => {
+    setCurrentSlot(period);
+    setCurrentIndex(combinedIndex);
+    if (updatedBookings.length > 0) {
+      updatedBookings[updatedBookings.length - 1] = {
+        ...updatedBookings[updatedBookings.length - 1],
+       timeSlot: period,
+       slotIndex: combinedIndex
+      }
+    }
+    handleChange({ booking: updatedBookings });
+  }
+
+  const addBooking = () => {
+    if (!currentDate || !currentSlot) return;
+    const newBooking = {
+      date: currentDate,
+      timeSlot: null,
+      slotIndex: null,
+    };
+
+    handleChange({
+      booking: [...bookings, newBooking],
+    });
+
+    setCurrentDate(tomorrow);
+    setCurrentSlot(null);
+    setCurrentIndex(null);
+  }
+
 
 
    return (
@@ -20,10 +73,19 @@ const Step2 = ({hero,slots,formData, handleChange, nextStep, prevStep }) => {
           <Heading level={1} className={`mb-3 md:mb-5`}>{hero.heading}</Heading>
           <Content className={`max-w-[325px] md:max-w-[830px] mb-1.5 mx-auto md:mb-0`}>{hero.content}</Content>
         </div>
-        <div className="grid grid-cols-[0.96fr_repeat(1,1fr)] gap-7.5">
-          <div className="border-1 border-[#E5E5E5] rounded-[23px] p-9.25">
+        <div className="grid grid-cols-[0.96fr_repeat(1,1fr)] gap-7.5 items-start mb-9">
+          <div className="border-1 border-[#E5E5E5] rounded-[23px] p-8">
             <Heading level={3} size={1} className={`mb-6.75`}>{slots.selectDate}</Heading>
             <Calendar  
+            tileClassName={({ date, view }) => {
+              if (view === "month" && date < tomorrow.setHours(0, 0, 0, 0)) {
+                   return "disabled-date"; // 👈 custom class
+               }
+            }}
+            onChange={handleDateChange}
+            value={currentDate}
+
+            minDate={tomorrow}
               prev2Label={null}
               next2Label={null}
               prevLabel = {
@@ -38,20 +100,26 @@ const Step2 = ({hero,slots,formData, handleChange, nextStep, prevStep }) => {
               }
            />
           </div>
-          <div className="border-1 border-[#E5E5E5] rounded-[23px] p-9.25">
-            <Heading level={3} size={1} className={`mb-6.75`}>{slots.availableSlot}</Heading>
-            <Content variant={2} className={`mb-6`}>Monday, January 15, 2024</Content>
+          <div className="border-1 border-[#E5E5E5] rounded-[23px] p-8">
+            <Heading level={3} size={1} className={`mb-4.75`}>{slots.availableSlot}</Heading>
+            <Content variant={2} className={`mb-4`}>{formatDate(currentDate, true)}</Content>
             <div className="grid grid-cols-1 gap-6">
               {slots?.timeslots?.map((timeslot,index) => {
                 return (
-                  <div key={index} className="">
+                  <div key={index} className=""
+                  >
                     <Heading level={4} size={2} className="mb-5">{timeslot.label}</Heading>
-                    <div className="grid grid-cols-2 gap-3.5">
+                    <div className="grid grid-cols-4 gap-3.5">
                     {timeslot.periods?.map((period, idx) => {
+                      const combinedIndex = `${index}${idx}`; 
+                      const isActive = currentIndex  === combinedIndex;
                       return (
-                        <div key={idx} className="border border-[#E5E5E5] rounded-[14px] p-5 text-center">
-                          <span className="block text-[#1a1a1a] text-[19px] font-medium">{period.time}</span>
-                          <span className="block text-[#666] text-[17px]">{period.check}</span>
+                        <div key={combinedIndex} 
+                        onClick={() => hadleTimeClick(period,combinedIndex)}
+                        className={`cursor-pointer border border-[#E5E5E5] rounded-[14px] p-5 text-center
+                        ${isActive ? "bg-[#1a1a1a] text-[#fff]" : ""}`}>
+                          <span className={`block ${isActive ? "text-[#fff]":"text-[#1a1a1a]"} text-[16px] font-medium`}>{period.time}</span>
+                          <span className={`block ${isActive ? "text-[#fff]" : "text-[#666]"} text-[14px]`}>{period.check}</span>
                         </div>
                       );
                     })}
@@ -60,8 +128,64 @@ const Step2 = ({hero,slots,formData, handleChange, nextStep, prevStep }) => {
                 );
               })}
             </div>
+            {formData?.frequency?.index === 0 && (
+              <div className="text-center pt-7">
+                 <Button type="button" onClick={addBooking}>Add another booking?</Button>
+               </div>
+            )}
+            
           </div>
         </div>
+    
+
+           <div className="bg-[#F0F0F0] rounded-[22px] p-8">
+          <Heading level={3} size={1} className={`mb-5`}>Booking Summary</Heading>
+            {[...formData.booking].reverse().map((b, idx) => ( 
+              <div key={idx} className="grid items-start grid-cols-3 mb-8">
+              <div className="flex items-center gap-3">
+                <span className="w-13 h-13 flex bg-[#1a1a1a] justify-center items-center rounded-[12px]">
+                  <Image src={`images/services/clean.svg`} width={20} height={18} alt="service" />
+                </span>
+                <div className="">
+                  <Heading level={4} size={3}>Service</Heading>
+                  <Content variant={2}>{formData?.service?.service.title}</Content>
+                </div>
+              </div>              
+              <div className="flex items-center gap-3">
+                <span className="w-13 h-13 flex bg-[#1a1a1a] justify-center items-center rounded-[12px]">
+                  <Image src={`images/services/date.svg`} width={16} height={18} alt="service" />
+                </span>
+                <div className="">
+                  <Heading level={4} size={3}>Date</Heading>
+                  <Content variant={2}>{formatDate(b.date)}</Content>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="w-13 h-13 flex bg-[#1a1a1a] justify-center items-center rounded-[12px]">
+                  <Image src={`images/services/clock.svg`} width={18} height={18} alt="service" />
+                </span>
+                <div className="">
+                  <Heading level={4} size={3}>Time</Heading>
+                  <Content variant={2}>{b?.timeSlot?.time}</Content>
+                </div>
+              </div>
+          </div>
+             ))}
+        
+          <div className="flex justify-between items-center">
+            <Heading level={3} size={1} className={`font-bold`}>Total: $89</Heading>
+            <div className="flex  gap-3 md:gap-4">
+              <Button type="button" onClick={prevStep} variant={`lightGray`} className={`border border-[#E5E5E5]`}>Back to Services</Button>
+              <Button type="button" >Continue to Checkout</Button>
+            </div>
+          </div>
+        </div>
+
+    
+
+ 
+       
+      
         <pre>{JSON.stringify(formData, null, 2)}</pre>
       </div>
         

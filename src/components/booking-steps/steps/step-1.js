@@ -5,45 +5,37 @@ import { Heading, Content, Button, Errors } from "@/components/ui";
 import Image from "next/image";
 
 const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextStep}) => {
-  const [activeService, setActiveService] = useState({ index: null, service: null });
-  const [activeFrequency, setFrequency] = useState({index:null, option: null});
-  const[location, setLocation] = useState("");
   const[errors, setErrors] = useState({service:"", frequency:"", location:""});
   const locationRef = useRef(null);
-
   const autocompleteRef = useRef(null);
 
   const handlePlaceChanged = () => {
     if (autocompleteRef.current) {
       const place = autocompleteRef.current.getPlace();
       if (place.formatted_address) {
-        setLocation(place.formatted_address);
+        handleChange({location: place.formatted_address});
         setErrors((prev) => ({ ...prev, location: "" }));
       }
-      // Optional: get lat/lng
-      const lat = place.geometry?.location?.lat();
-      const lng = place.geometry?.location?.lng();
-      console.log("Coordinates:", lat, lng);
     }
   };
 
 
   const handleClick = (service, index) => {
-    setActiveService({ index, service });
+    handleChange({service: { index, service } });
     if(errors.service){
       setErrors((prev) => ({...prev, service:""}));
     }
   };
 
   useEffect(() => {
-    if (activeService.service && locationRef.current) {
+    if (formData.service?.service && locationRef.current) {
       locationRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
       setTimeout(() => locationRef.current.focus(), 350);
     }
-  }, [activeService]); 
+  }, [formData?.service]); 
 
   const handleFrequency = (option,index) => {
-    setFrequency({index,option});
+    handleChange({frequency: { index, option } });
     if(errors.frequency){
       setErrors((prev) => ({...prev, frequency:""}));
     }
@@ -51,24 +43,21 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
 
   const handleShedule = () =>{
     let newErrors = {service:"", frequency:"", location:""};
-    if(!activeService.service){
+    if(!formData?.service?.service){
       newErrors.service = errorMsg.service;
     }
-    if(!activeFrequency.option){
+    if(!formData?.frequency?.option){
       newErrors.frequency = errorMsg.frequency;
     }
-    if(!location.trim()){
+    if(!formData?.location?.trim()){
       newErrors.location = errorMsg.location;
     }
     setErrors(newErrors);
     if (!newErrors.service && !newErrors.frequency && !newErrors.location) {
-        const serviceResults = {
-          service: activeService,
-          location: location,
-          frequency: activeFrequency
-        };
-
-        if(handleChange) handleChange(serviceResults);
+      const today = new Date();
+      const tomorrow = new Date(today);
+       tomorrow.setDate(today.getDate() + 1);
+        handleChange({booking: [{date: tomorrow, timeSlot: null,slotIndex: null}] });
         if (nextStep) nextStep();
     }
 
@@ -88,7 +77,7 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
           <div className="mb-4 md:mb-10">
              <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-2.5 md:gap-7">
             {services.map((service, index) => {
-              const isActive = activeService.index === index;
+              const isActive = formData.service?.index === index;
 
               return (
                 <div
@@ -168,12 +157,8 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
                   placeholder={fields.location.placeholder}
                   className="w-full border-1 border-[#E5E5E5] rounded-[8px] md:rounded-[12px] font-normal text-[13px] md:text-[16px] 
                     placeholder:text-[#ADAEBC] text-[#666666] leading-6.5 md:leading-9 px-4 md:px-6 py-2 md:py-3"
-                  value={location}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setLocation(value);
-                    setErrors((prev) => ({ ...prev, location: value.trim() ? "" : errorMsg.location }));
-                  }}
+                  value={formData?.location || ""}
+                  onChange={(e) => handleChange({ location: e.target.value })}
                 />
               </Autocomplete>
             </LoadScript>
@@ -194,7 +179,7 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
             </label>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-6.5 text-center">
               {fields.frequency.options.map((option,index)=>{
-                const isActive = activeFrequency.index === index;
+                const isActive = formData.frequency?.index === index;
                 return (
                 <div key={index} onClick={()=> handleFrequency(option,index)} className={`cursor-pointer border-1 rounded-[12px] p-4 md:p-10 
                   ${isActive ? "bg-[#1a1a1a] border-[#1A1A1A] text-[#fff]" : "border-[#E5E5E5]"}`}>
@@ -215,12 +200,12 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
             <Button type="button" onClick={handleShedule}>{fields.buttonShedule}</Button>
             <Button type="button" variant={`lightGray`}>{fields.buttonQuote}</Button>
           </div>
-
+ 
 
         </div>
       </div>
     </div>
-  );
+  );  
 };
 
 export default Step1;

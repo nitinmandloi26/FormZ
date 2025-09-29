@@ -41,7 +41,8 @@ body {
   @apply text-[#1A1A1A] text-[18px] font-normal font-sans min-h-13.5;
 }
 
-.react-calendar__month-view__days__day--neighboringMonth, .react-calendar__decade-view__years__year--neighboringDecade, .react-calendar__century-view__decades__decade--neighboringCentury{
+.react-calendar__month-view__days__day--neighboringMonth, .react-calendar__decade-view__years__year--neighboringDecade, .react-calendar__century-view__decades__decade--neighboringCentury,
+.disabled-date{
   @apply text-[#666666] opacity-50;
 }
 
@@ -53,7 +54,7 @@ body {
   @apply text-center gap-2.25;
 }
 
-.react-calendar__tile--active{
+.react-calendar__tile--active,.highlight-today{
   @apply bg-[#1A1A1A] text-[#fff] rounded-[9px];
 }
 

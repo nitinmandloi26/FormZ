@@ -6,7 +6,7 @@ const serviceConfig = {
     services:[
         {
             icon:"images/services/home.svg",
-            title:"Residential",
+            title:"Residential Cleaning",
             content:"Complete home cleaning services for apartments, houses, and condos.",
             tags:["Kitchen","Bathrooms","Living Areas"]
         },
@@ -52,7 +52,7 @@ const serviceConfig = {
             options:[
                 {
                     label:"One-time",
-                    value:"Single service"
+                    value:"Multi-Date Booking"
                 },
                 {
                     label:"Weekly",
