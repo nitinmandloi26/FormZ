@@ -189,13 +189,7 @@ const Step2 = ({hero,slots,formData, handleChange, nextStep, prevStep }) => {
       </div>
       </div>
       </div>
-      
-      
-      
-      
-      
-      
-      <pre>{JSON.stringify(formData, null, 2)}</pre>
+    
       </div>
       
       </div>
