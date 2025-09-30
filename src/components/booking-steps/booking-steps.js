@@ -2,8 +2,10 @@
 import { useState } from "react";
 import serviceConfig from "@/config/serviceConfig";
 import bookingSlotsConfig from "@/config/bookingSlotsConfig";
+import customerDetailConfig from "@/config/customerDetailConfig";
 import Step1 from "./steps/step-1";
 import Step2 from "./steps/step-2";
+import Step3 from "./steps/step-3";
 import { motion, AnimatePresence } from "framer-motion";
 import ProgressBar from "../ui/progress-bar";
 
@@ -66,6 +68,24 @@ const prevStep = () => {
             className="w-full"
           >
                 <Step2 {...bookingSlotsConfig} 
+                formData={formData}
+                handleChange={handleChange}
+                nextStep={nextStep}
+                prevStep={prevStep} 
+                />
+            </motion.div>
+             )}
+             {step === 3 && (
+              <motion.div
+            key="step3"
+            initial="enter"
+            animate="center"
+            exit="exit"
+            variants={variants}
+            transition={{ duration: 0.5 }}
+            className="w-full"
+          >
+                <Step3 {...customerDetailConfig} 
                 formData={formData}
                 handleChange={handleChange}
                 nextStep={nextStep}
