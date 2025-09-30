@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import Calendar from "react-calendar";
-import { Heading, Content, Button, formatDate } from "@/components/ui";
+import { Heading, Content, Button, formatDate, Errors } from "@/components/ui";
 import Image from "next/image";
 
 
-const Step2 = ({hero,slots,formData, handleChange, nextStep, prevStep }) => {
+const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep }) => {
+  const[errors, setErrors] = useState({slots:""});
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(today.getDate() + 1);
@@ -43,6 +44,7 @@ const Step2 = ({hero,slots,formData, handleChange, nextStep, prevStep }) => {
         timeSlot: period,
         slotIndex: combinedIndex
       }
+      setErrors((prev) => ({ ...prev, slots: "" }));
     }
     handleChange({ booking: updatedBookings });
   }
@@ -68,6 +70,22 @@ const Step2 = ({hero,slots,formData, handleChange, nextStep, prevStep }) => {
     const updatedBookings = bookings.filter((_, idx) => idx !== removeIndex);
     handleChange({ booking: updatedBookings });
   };
+
+  const handleCheckout = () => {
+    let newErrors = {slots:""};
+   if (updatedBookings.length > 0) {
+      if(!updatedBookings[updatedBookings.length - 1].slotIndex){
+        newErrors.slots = "Please choose available slot.";
+      }
+    }
+    setErrors(newErrors);
+    if (!newErrors.slots){
+       if (nextStep) nextStep();
+    }
+  
+  }
+
+  
 
   
   return (
@@ -134,9 +152,12 @@ const Step2 = ({hero,slots,formData, handleChange, nextStep, prevStep }) => {
         );
       })}
       </div>
+    {errors.slots && (
+                  <Errors>{errors.slots}</Errors>
+                 )}
       {formData?.frequency?.index === 0 && (
         <div className="text-center pt-7">
-        <Button type="button" onClick={addBooking}>Add another booking?</Button>
+        <Button type="button" onClick={addBooking}>Add To Booking</Button>
         </div>
       )}
       
@@ -182,14 +203,14 @@ const Step2 = ({hero,slots,formData, handleChange, nextStep, prevStep }) => {
       ))}
       
       <div className="flex justify-between items-center">
-      <Heading level={3} size={1} className={`font-bold`}>Total: $89</Heading>
+      <Heading level={3} size={1} className={`font-bold`}>Total: ${formData.service.service.price * formData?.booking.length}</Heading>
       <div className="flex  gap-3 md:gap-4">
       <Button type="button" onClick={prevStep} variant={`lightGray`} className={`border border-[#E5E5E5]`}>Back to Services</Button>
-      <Button type="button" >Continue to Checkout</Button>
+      <Button type="button" onClick={handleCheckout}>Continue to Checkout</Button>
       </div>
       </div>
       </div>
-    
+  
       </div>
       
       </div>
