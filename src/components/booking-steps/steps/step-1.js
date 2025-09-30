@@ -144,7 +144,7 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
           </label>
           <span className="block relative">
             <LoadScript
-              googleMapsApiKey="{process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}"
+              googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
               libraries={["places"]}
             >
               <Autocomplete
