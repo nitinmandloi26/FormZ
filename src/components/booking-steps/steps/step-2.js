@@ -180,7 +180,7 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
         </div>  
         <div className="flex items-center gap-3">
         <span className="w-13 h-13 flex bg-[#1a1a1a] justify-center items-center rounded-[12px]">
-        <Image src={`images/services/clean.svg`} width={20} height={18} alt="service" />
+        <Image src={`images/services/booking.svg`} width={25} height={25} alt="service" />
         </span>
         <div className="">
         <Heading level={4} size={3}>Booking Type</Heading>
