@@ -168,7 +168,7 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
       <div className="bg-[#F0F0F0] rounded-[22px] p-8">
       <Heading level={3} size={1} className={`mb-5`}>Booking Summary</Heading>
       {[...formData.booking].reverse().map((b, idx) => ( 
-        <div key={idx} className="grid items-start grid-cols-3 mb-8 relative">
+        <div key={idx} className="grid items-start grid-cols-4 mb-8 relative">
         <div className="flex items-center gap-3">
         <span className="w-13 h-13 flex bg-[#1a1a1a] justify-center items-center rounded-[12px]">
         <Image src={`images/services/clean.svg`} width={20} height={18} alt="service" />
@@ -177,7 +177,16 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
         <Heading level={4} size={3}>Service</Heading>
         <Content variant={2}>{formData?.service?.service.title}</Content>
         </div>
-        </div>              
+        </div>  
+        <div className="flex items-center gap-3">
+        <span className="w-13 h-13 flex bg-[#1a1a1a] justify-center items-center rounded-[12px]">
+        <Image src={`images/services/clean.svg`} width={20} height={18} alt="service" />
+        </span>
+        <div className="">
+        <Heading level={4} size={3}>Booking Type</Heading>
+        <Content variant={2}>{formData?.frequency?.option.label}</Content>
+        </div>
+        </div>            
         <div className="flex items-center gap-3">
         <span className="w-13 h-13 flex bg-[#1a1a1a] justify-center items-center rounded-[12px]">
         <Image src={`images/services/date.svg`} width={16} height={18} alt="service" />
