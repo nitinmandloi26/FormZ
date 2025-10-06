@@ -8,7 +8,8 @@ const button = tv({
         variant:{
             dark:"bg-[#1a1a1a] text-white hover:bg-neutral-700",
             light:"bg-white text-[#1a1a1a] hover:bg-[#f9f9f9]",
-            lightGray:"bg-[#F0F0F0] text-[#1A1A1A] hover:bg-[#d1d1d1]"
+            lightGray:"bg-[#F0F0F0] text-[#1A1A1A] hover:bg-[#d1d1d1]",
+            lightGrayB:"bg-[#F0F0F0] text-[#1A1A1A] border border-[#E5E5E5] hover:bg-[#d1d1d1]"
         }
     },
     defaultVariants:{

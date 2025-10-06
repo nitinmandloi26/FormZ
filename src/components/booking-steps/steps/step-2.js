@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect  } from "react";
 import Calendar from "react-calendar";
 import { Heading, Content, Button, formatDate, Errors } from "@/components/ui";
 import Image from "next/image";
@@ -15,8 +15,15 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
   const [currentDate, setCurrentDate] = useState(tomorrow);
   const [currentSlot, setCurrentSlot] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(null);
+  const [serviceFee, setServiceFee] = useState(0);
   
   const bookings = formData.booking || [];
+
+  useEffect(() => {
+    const total = formData?.service?.service?.price * bookings.length || 0;
+    setServiceFee(total);
+    handleChange({ serviceFee: total }); // sync to parent
+  }, [bookings.length, formData?.service?.service?.price]);
   
   const updatedBookings = [...bookings];
   
@@ -30,7 +37,7 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
         date: date
       }
     }
-    handleChange({ booking: updatedBookings });
+    handleChange({ booking: updatedBookings});
     
   };
   
@@ -58,7 +65,7 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
     };
     
     handleChange({
-      booking: [...bookings, newBooking],
+      booking: [...bookings, newBooking]
     });
     
     setCurrentDate(tomorrow);
@@ -82,7 +89,6 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
     if (!newErrors.slots){
        if (nextStep) nextStep();
     }
-  
   }
 
   
@@ -212,14 +218,14 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
       ))}
       
       <div className="flex justify-between items-center">
-      <Heading level={3} size={1} className={`font-bold`}>Total: ${formData.service.service.price * formData?.booking.length}</Heading>
+      <Heading level={3} size={1} className={`font-bold`}>Total: ${serviceFee}</Heading>
       <div className="flex  gap-3 md:gap-4">
       <Button type="button" onClick={prevStep} variant={`lightGray`} className={`border border-[#E5E5E5]`}>Back to Services</Button>
       <Button type="button" onClick={handleCheckout}>Continue to Checkout</Button>
       </div>
       </div>
       </div>
-  
+ 
       </div>
       
       </div>

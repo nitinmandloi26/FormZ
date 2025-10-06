@@ -4,7 +4,8 @@ const label = tv({
     base: "block text-[#1A1A1A] font-medium",
     variants:{
         variant:{
-            1:"text-[14px] md:text-[18px] mb-2.5 md:mb-3"
+            1:"text-[14px] md:text-[18px] mb-2.5 md:mb-3",
+            2:"text-[16px] font-normal mb-0"
         }
     },
     defaultVariants:{
@@ -12,8 +13,8 @@ const label = tv({
     }
 });
 
-export const Label = ({variant, className,  children }) => {
-   return <label className={label({variant,className})}>{children }</label>;
+export const Label = ({variant, className,  children ,...props}) => {
+   return <label className={label({variant,className})} {...props}>{children }</label>;
 }
 
 const input = tv({
@@ -36,4 +37,10 @@ export const Select = ({variant, className, children, ...props}) => {
    return <select className={input({variant,className})} {...props}>
     {children}
    </select>;
+}
+
+export const TextArea = ({variant, className, children, ...props}) => {
+   return <textarea className={input({variant,className})} {...props}>
+    {children}
+   </textarea>;
 }

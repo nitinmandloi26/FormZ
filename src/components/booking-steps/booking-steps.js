@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState,useCallback  } from "react";
 import serviceConfig from "@/config/serviceConfig";
 import bookingSlotsConfig from "@/config/bookingSlotsConfig";
 import customerDetailConfig from "@/config/customerDetailConfig";
@@ -20,9 +20,10 @@ const variants = {
 export default function BookingSteps(){
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({});
-    const handleChange = (data) => {
-         setFormData(prev => ({ ...prev, ...data }));
-     };
+    const handleChange = useCallback((data) => {
+  setFormData(prev => ({ ...prev, ...data }));
+}, []);
+
 
      const nextStep = () => {
   setStep((prev) => prev + 1);
