@@ -67,7 +67,7 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
   };
 
   // 🔘 Validate all fields before payment
-  const handlePayment = () => {
+ const handlePayment = () => {
   const requiredFields = [
     "firstName",
     "lastName",
@@ -77,34 +77,67 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
     "city",
     "state",
     "zip",
-    "propertyType"
+    "propertyType",
   ];
 
-  // Create a local error object
   const newErrors = {};
 
-  // Run validations and collect results
   requiredFields.forEach((field) => {
+    const value = inputs[field];
+    let error = "";
 
-    validateField(field, inputs[field]);
-   
+    switch (field) {
+      case "firstName":
+        if (!value.trim()) error = "First name is required";
+        break;
+      case "lastName":
+        if (!value.trim()) error = "Last name is required";
+        break;
+      case "email":
+        if (!value.trim()) error = "Email is required";
+        else if (!/\S+@\S+\.\S+/.test(value)) error = "Invalid email format";
+        break;
+      case "phone":
+        if (!value.trim()) error = "Phone number is required";
+        else if (!/^\+?\d{7,15}$/.test(value)) error = "Invalid phone number";
+        break;
+      case "street":
+        if (!value.trim()) error = "Street address is required";
+        break;
+      case "city":
+        if (!value.trim()) error = "City is required";
+        break;
+      case "state":
+        if (!value.trim()) error = "Please select a state";
+        break;
+      case "zip":
+        if (!value.trim()) error = "ZIP code is required";
+        else if (!/^\d{4,10}$/.test(value)) error = "Invalid ZIP code";
+        break;
+      case "propertyType":
+        if (!value.trim()) error = "Please select a property type.";
+        break;
+      default:
+        break;
+    }
+
+    if (error) {
+      newErrors[field] = error; // collect errors
+    }
+
+    // also update UI errors immediately
+    validateField(field, value);
   });
-let allEmpty = true;
-Object.values(errors).forEach((value) => {
-  if (value) {
-    allEmpty = false; // If any value is not empty, set flag to false
-  }
-});
 
-if(allEmpty){
+  setErrors(newErrors);
+
+  // stop if any errors exist
+  if (Object.keys(newErrors).length > 0) return;
+
+  // proceed to next step
   handleChange({ ...inputs });
-   nextStep();
- } else {
-    window.scrollTo({ top: 0, behavior: "smooth" });
- }
+  nextStep();
 };
-
-
     
     return(
         <div className="w-full py-6 md:py-15 justify-center items-center">
