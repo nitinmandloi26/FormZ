@@ -3,7 +3,7 @@
 import { Heading, Content, Button } from "@/components/ui";
 import Image from "next/image";
 const Step4 = ({hero,formData,handleChange,nextStep, prevStep}) => {
-    return(
+    return( 
         <div className="w-full py-6 md:py-15 justify-center items-center">
             <div className="max-w-[1332px] mx-auto px-5.5 md:px-4">
                 <div className="text-center mb-6 md:mb-12">
@@ -105,6 +105,7 @@ const Step4 = ({hero,formData,handleChange,nextStep, prevStep}) => {
                 </div>
             </div>
             <Button type="button" onClick={prevStep}>Prev</Button>
+            <Button type="button" onClick={nextStep}>Next</Button>
         </div>
     );
 }
