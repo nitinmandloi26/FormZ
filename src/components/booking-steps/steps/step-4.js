@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react/no-unescaped-entities */
 import { Heading, Content, Button } from "@/components/ui";
 import Image from "next/image";
 const Step4 = ({hero,formData,handleChange,nextStep, prevStep}) => {
@@ -93,7 +94,7 @@ const Step4 = ({hero,formData,handleChange,nextStep, prevStep}) => {
                                     <Image src="images/services/security.svg" width={16} height={16} alt="Security" />
                                 <div className="">
                                     <h5 className="text-[#1a1a1a] text-[14px] font-medium">100% Satisfaction Guarantee</h5>
-                                    <p className="text-[#666666] text-[12px] font-normal">If you're not satisfied, we'll make it right or refund your payment</p>
+                                    <p className="text-[#666666] text-[12px] font-normal">If you&apos;re not satisfied, we&apos;ll make it right or refund your payment</p>
                                 </div>
                             </div>
                         </div>
