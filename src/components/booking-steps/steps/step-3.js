@@ -30,41 +30,46 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
 
     switch (name) {
       case "firstName":
-        if (!value.trim()) error = "First name is required";
+        if (!value.trim()) return error = "First name is required";
         break;
       case "lastName":
-        if (!value.trim()) error = "Last name is required";
+        if (!value.trim()) return error = "Last name is required";
         break;
       case "email":
-        if (!value.trim()) error = "Email is required";
-        else if (!/\S+@\S+\.\S+/.test(value)) error = "Invalid email format";
+        if (!value.trim()) return error = "Email is required";
+        else if (!/\S+@\S+\.\S+/.test(value)) return error = "Invalid email format";
         break;
       case "phone":
-        if (!value.trim()) error = "Phone number is required";
-        else if (!/^\+?\d{7,15}$/.test(value)) error = "Invalid phone number";
+        if (!value.trim()) return error = "Phone number is required";
+        else if (!/^\+?\d{7,15}$/.test(value)) return error = "Invalid phone number";
         break;
       case "street":
-        if (!value.trim()) error = "Street address is required";
+        if (!value.trim()) return error = "Street address is required";
         break;
       case "city":
-        if (!value.trim()) error = "City is required";
+        if (!value.trim()) return error = "City is required";
         break;
       case "state":
-        if (!value.trim()) error = "Please select a state";
+        if (!value.trim()) return error = "Please select a state";
         break;
       case "zip":
-        if (!value.trim()) error = "ZIP code is required";
-        else if (!/^\d{4,10}$/.test(value)) error = "Invalid ZIP code";
+        if (!value.trim()) return error = "ZIP code is required";
+        else if (!/^\d{4,10}$/.test(value)) return error = "Invalid ZIP code";
         break;
       case "propertyType":
-        if (!value.trim()) error = "Please select a property type.";
+        if (!value.trim()) return error = "Please select a property type.";
         break;
       default:
         break;
     }
 
-    setErrors((prev) => ({ ...prev, [name]: error }));
   };
+
+  const validateError = (name,value) => { 
+    setInputs({ ...inputs, [name]: value });
+    setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
+  }
+
 
   // 🔘 Validate all fields before payment
  const handlePayment = () => {
@@ -85,48 +90,10 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
   requiredFields.forEach((field) => {
     const value = inputs[field];
     let error = "";
-
-    switch (field) {
-      case "firstName":
-        if (!value.trim()) error = "First name is required";
-        break;
-      case "lastName":
-        if (!value.trim()) error = "Last name is required";
-        break;
-      case "email":
-        if (!value.trim()) error = "Email is required";
-        else if (!/\S+@\S+\.\S+/.test(value)) error = "Invalid email format";
-        break;
-      case "phone":
-        if (!value.trim()) error = "Phone number is required";
-        else if (!/^\+?\d{7,15}$/.test(value)) error = "Invalid phone number";
-        break;
-      case "street":
-        if (!value.trim()) error = "Street address is required";
-        break;
-      case "city":
-        if (!value.trim()) error = "City is required";
-        break;
-      case "state":
-        if (!value.trim()) error = "Please select a state";
-        break;
-      case "zip":
-        if (!value.trim()) error = "ZIP code is required";
-        else if (!/^\d{4,10}$/.test(value)) error = "Invalid ZIP code";
-        break;
-      case "propertyType":
-        if (!value.trim()) error = "Please select a property type.";
-        break;
-      default:
-        break;
-    }
-
+    error = validateField(field, value);   
     if (error) {
       newErrors[field] = error; // collect errors
     }
-
-    // also update UI errors immediately
-    validateField(field, value);
   });
 
   setErrors(newErrors);
@@ -154,19 +121,13 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
                                     <div className="mb-8">
                                         <Label>First Name *</Label>
                                         <Input placeholder="Enter your first name" value={inputs.firstName}
-  onChange={(e) => {
-    setInputs({ ...inputs, firstName: e.target.value });
-    validateField("firstName", e.target.value);
-     }}
+  onChange={(e) => validateError("firstName",e.target.value)}
 />            {errors.firstName  && ( <Errors>{errors.firstName }</Errors>  )}
                                     </div>
                                     <div className="mb-8">
                                         <Label>Last Name *</Label>
                                         <Input placeholder="Enter your last name" value={inputs.lastName}
-  onChange={(e) =>{ 
-    setInputs({ ...inputs, lastName: e.target.value }); 
-    validateField("lastName", e.target.value);
-  }}/>
+  onChange={(e) =>validateError("lastName",e.target.value)}/>
    {errors.lastName  && ( <Errors>{errors.lastName }</Errors>  )}
                                     </div>
                                 </div>
@@ -174,19 +135,13 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
                                     <div className="mb-8">
                                         <Label>Email Address *</Label>
                                         <Input type="email" placeholder="your.email@example.com" value={inputs.email}
-  onChange={(e) => {
-    setInputs({ ...inputs, email: e.target.value });
-    validateField("email", e.target.value);
-    }}/>
+  onChange={(e) => validateError("email",e.target.value)}/>
   {errors.email  && ( <Errors>{errors.email }</Errors>  )}
                                     </div>
                                     <div className="mb-8">
                                         <Label>Phone Number *</Label>
                                         <Input placeholder="+1 (555) 123-4567" value={inputs.phone}
-  onChange={(e) => {
-    setInputs({ ...inputs, phone: e.target.value });
-    validateField("phone", e.target.value);
-    }}/>
+  onChange={(e) => validateError("phone",e.target.value)}/>
   {errors.phone  && ( <Errors>{errors.phone }</Errors>  )}
                                     </div>
                                 </div>
@@ -196,29 +151,20 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
                                 <div className="mb-8">
                                     <Label>Street Address *</Label>
                                     <Input placeholder="123 Main Street" value={inputs.street}
-  onChange={(e) => {
-    setInputs({ ...inputs, street: e.target.value });
-    validateField("street", e.target.value);
-    }}/>
+  onChange={(e) => validateError("street",e.target.value)}/>
    {errors.street  && ( <Errors>{errors.street }</Errors>  )}
                                 </div>
                                 <div className="grid grid-cols-3 gap-8">
                                     <div className="mb-8">
                                         <Label>City *</Label>
                                         <Input placeholder="New York" value={inputs.city}
-  onChange={(e) => {
-    setInputs({ ...inputs, city: e.target.value });
-    validateField("city", e.target.value);
-    }}/>
+  onChange={(e) => validateError("city",e.target.value)}/>
   {errors.city  && ( <Errors>{errors.city }</Errors>  )}
                                     </div>
                                     <div className="mb-8">
                                         <Label>State *</Label>
                                         <Select value={inputs.state}
-  onChange={(e) => {
-    setInputs({ ...inputs, state: e.target.value });
-    validateField("state", e.target.value);
-    }}
+  onChange={(e) => validateError("state",e.target.value)}
 >
                                             <option value="">Select State</option>
                                             <option value="test1">Test 1</option>
@@ -228,17 +174,14 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
                                         <div className="mb-8">
                                         <Label>ZIP Code *</Label>
                                         <Input placeholder="10001" value={inputs.zip}
-  onChange={(e) => {
-    setInputs({ ...inputs, zip: e.target.value });
-    validateField("zip", e.target.value);
-}}/>
+  onChange={(e) => validateError("zip",e.target.value)}/>
   {errors.zip  && ( <Errors>{errors.zip }</Errors>  )}
                                     </div>
                                 </div>
                                 <div className="mb-8">
                                     <Label>Apartment/Unit (Optional)</Label>
                                     <Input placeholder="Apt 4B, Unit 12, etc." value={inputs.apartment}
-  onChange={(e) => setInputs({ ...inputs, apartment: e.target.value })}/>
+  onChange={(e) => validateError("apartment",e.target.value)}/>
                                 </div>
                         </div>
                         <div className="">
@@ -247,7 +190,7 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
                                     <Label>Special Instructions/Notes</Label>
                                     <TextArea className={`h-40 text-[16px] placeholder:w-130`} placeholder="Please include any special instructions, access codes, pet  information, or specific cleaning preferences..."
                                     value={inputs.notes}
-  onChange={(e) => setInputs({ ...inputs, notes: e.target.value })}></TextArea>
+  onChange={(e) => validateError("notes",e.target.value)}></TextArea>
                                 </div>
                             <div className="mb-8">
                                     <Label>Property Type</Label>
@@ -255,10 +198,7 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
                                     {propertyType.map((property,index) => {
                                         const isSelected = inputs.propertyType === property;
                                         return (
-                                        <div key={index} onClick={() =>{
-                                             setInputs({ ...inputs, propertyType: property });
-                                            validateField("propertyType", property);
-                                        }}
+                                        <div key={index} onClick={() =>validateError("propertyType",property)}
  className={`px-6 py-4 cursor-pointer border rounded-2xl flex items-center gap-4 transition-colors
             ${isSelected ? "border-black bg-[#1a1a1a] text-[#fff]" : "border-[#E5E5E5]"}`}
 >

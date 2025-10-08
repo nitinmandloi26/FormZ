@@ -5,7 +5,8 @@ const contentVariants = tv({
     variants:{
         variant:{
             1: "text-[12px] md:text-[22px]",
-            2: "text-[17px]"
+            2: "text-[17px]",
+            3: "text-[14px]"
         }
     },
     defaultVariants:{
