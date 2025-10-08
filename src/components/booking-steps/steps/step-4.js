@@ -105,7 +105,7 @@ const Step4 = ({hero,formData,handleChange,nextStep, prevStep}) => {
                 </div>
             </div>
             <Button type="button" onClick={prevStep}>Prev</Button>
-            <Button type="button" onClick={nextStep}>Next</Button>
+            <Button type="button" onClick={nextStep}>Next </Button>
         </div>
     );
 }
