@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable react/no-unescaped-entities */
-import { Heading, Content, Button } from "@/components/ui";
+import { Heading, Content, Label, Input, Button } from "@/components/ui";
 import Image from "next/image";
 const Step4 = ({hero,formData,handleChange,nextStep, prevStep}) => {
     return( 
@@ -100,7 +100,23 @@ const Step4 = ({hero,formData,handleChange,nextStep, prevStep}) => {
                         </div>
                     </div>
                     <div className="">
-                        
+                        <div className="bg-[#fff] border border-[#E5E5E5] rounded-[20px] p-10">
+                            <Heading level={3} size={5} className={`mb-7`}>Payment Information</Heading>
+                            <div className="grid grid-col-1 gap-7">
+                                <div className="">
+                                    <Label>Email Address</Label>
+                                    <Input type="email" placeholder="john.smith@email.com"/>
+                                </div>
+                                <div className="">
+                                    <Label>Card Information</Label>
+                                    <Input placeholder="1234 1234 1234 1234"/>
+                                </div>
+                                <div className="">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div className=""></div>
                     </div>
                 </div>
             </div>

@@ -14,7 +14,8 @@ const heading = tv({
             2:"text-[21px] font-medium",
             3:"text-[18px] font-medium",
             4:"text-[24px] md:text-[33px] font-semibold",
-            4:"text-[24px] font-semibold"
+            4:"text-[24px] font-semibold",
+            5:"text-[32px] font-semibold",
         },
     },
     defaultVariants:{
