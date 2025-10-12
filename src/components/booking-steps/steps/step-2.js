@@ -227,7 +227,6 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
       </div>
  
       </div>
-      
       </div>
     );
     

@@ -4,10 +4,12 @@ import serviceConfig from "@/config/serviceConfig";
 import bookingSlotsConfig from "@/config/bookingSlotsConfig";
 import customerDetailConfig from "@/config/customerDetailConfig";
 import paymentConfig from "@/config/paymentConfig";
+import bookingConfirmConfig from "@/config/bookingConfirmConfig";
 import Step1 from "./steps/step-1";
 import Step2 from "./steps/step-2";
 import Step3 from "./steps/step-3";
 import Step4 from "./steps/step-4";
+import Step5 from "./steps/step-5";
 import { motion, AnimatePresence } from "framer-motion";
 import ProgressBar from "../ui/progress-bar";
 
@@ -108,6 +110,25 @@ const prevStep = () => {
             className="w-full"
           >
                 <Step4 {...paymentConfig} 
+                formData={formData}
+                handleChange={handleChange}
+                nextStep={nextStep}
+                prevStep={prevStep} 
+                />
+            </motion.div>
+             )}
+
+             {step === 5 && (
+              <motion.div
+            key="step4"
+            initial="enter"
+            animate="center"
+            exit="exit"
+            variants={variants}
+            transition={{ duration: 0.5 }}
+            className="w-full"
+          >
+                <Step5 {...bookingConfirmConfig} 
                 formData={formData}
                 handleChange={handleChange}
                 nextStep={nextStep}

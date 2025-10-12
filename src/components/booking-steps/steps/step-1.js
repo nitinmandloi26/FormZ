@@ -1,23 +1,13 @@
 "use client";
-import { LoadScript, Autocomplete } from "@react-google-maps/api";
 import { useState, useRef, useEffect } from "react";
 import { Heading, Content, Button, Errors } from "@/components/ui";
+import AddressAutocomplete from "@/components/AddressAutocomplete"; 
 import Image from "next/image";
 
 const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextStep}) => {
   const[errors, setErrors] = useState({service:"", frequency:"", location:""});
   const locationRef = useRef(null);
   const autocompleteRef = useRef(null);
-
-  const handlePlaceChanged = () => {
-    if (autocompleteRef.current) {
-      const place = autocompleteRef.current.getPlace();
-      if (place.formatted_address) {
-        handleChange({location: place.formatted_address});
-        setErrors((prev) => ({ ...prev, location: "" }));
-      }
-    }
-  };
 
 
   const handleClick = (service, index) => {
@@ -49,7 +39,7 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
     if(!formData?.frequency?.option){
       newErrors.frequency = errorMsg.frequency;
     }
-    if(!formData?.location?.trim()){
+    if(!formData?.location?.fullAddress.trim()){
       newErrors.location = errorMsg.location;
     }
     setErrors(newErrors);
@@ -143,25 +133,25 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
             {fields.location.label}
           </label>
           <span className="block relative">
-            <LoadScript
-              googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}
-              libraries={["places"]}
-            >
-              <Autocomplete
-                onLoad={(ac) => (autocompleteRef.current = ac)}
-                onPlaceChanged={handlePlaceChanged}
-              >
-                <input
-                  ref={locationRef}
-                  type="text"
-                  placeholder={fields.location.placeholder}
-                  className="w-full border-1 border-[#E5E5E5] rounded-[8px] md:rounded-[12px] font-normal text-[13px] md:text-[16px] 
-                    placeholder:text-[#ADAEBC] text-[#666666] leading-6.5 md:leading-9 px-4 md:px-6 py-2 md:py-3"
-                  value={formData?.location || ""}
-                  onChange={(e) => handleChange({ location: e.target.value })}
-                />
-              </Autocomplete>
-            </LoadScript>
+            <AddressAutocomplete 
+              value={formData?.location?.fullAddress  || ""} 
+              onChange={(val) => { 
+                handleChange({ location: { ...formData.location, fullAddress: val } });
+                setErrors((prev) => ({ ...prev , location: "" })); 
+              }}
+              onSelect={(place) => {
+                handleChange({ location: {
+                  street: place.street,
+                  city: place.city,
+                  state: place.state,
+                  country: place.country,
+                  postcode: place.postcode,
+                  fullAddress: place.fullAddress
+                } });
+              }}
+              inputRef={locationRef}
+              />
+
             <Image
               className="absolute right-4 md:right-7 top-1/2 -translate-y-1/2 h-[16px] md:h-[26px] w-auto"
               src={fields.location.suffix}

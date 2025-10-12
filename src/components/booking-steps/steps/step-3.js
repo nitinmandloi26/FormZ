@@ -4,21 +4,26 @@ import { Heading, Content, Label, Button, formatDate, Errors, Input, Select,Text
 import Image from "next/image";
 const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevStep }) => {
     const serviceFee = formData.serviceFee || 0;
-    const totalPrice = serviceFee + prices.plateformFee.price + prices.taxFee.price;
+    const taxPrice =  serviceFee * prices.taxFee.price / 100;
+    const totalPrice = serviceFee + prices.plateformFee.price + taxPrice;
     const [errors, setErrors] = useState({});
     const [inputs, setInputs] = useState({
     firstName:formData?.firstName || "",
     lastName: formData?.lastName || "",
     email: formData?.email || "",
     phone:formData?.phone || "",
-    street: formData?.street || "",
-    city: formData?.city || "",
-    state: formData?.state || "",
-    zip: formData?.zip || "",
+    street: formData?.location?.street || "",
+    city: formData?.location?.city || "",
+    state: formData?.location?.state || "",
+    zip: formData?.location?.postcode || "",
     apartment: formData?.apartment || "",
     notes: formData?.notes || "",
     propertyType: formData?.propertyType || "",
     promotion: formData?.promotion || false,
+    serviceFee:serviceFee,
+    plateformFee:prices.plateformFee.price,
+    taxFee: taxPrice,
+    totalPrice: totalPrice
   });
 
   useEffect(() => {
@@ -50,7 +55,7 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
         if (!value.trim()) return error = "City is required";
         break;
       case "state":
-        if (!value.trim()) return error = "Please select a state";
+        if (!value.trim()) return error = "State is required";
         break;
       case "zip":
         if (!value.trim()) return error = "ZIP code is required";
@@ -163,12 +168,8 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
                                     </div>
                                     <div className="mb-8">
                                         <Label>State *</Label>
-                                        <Select value={inputs.state}
-  onChange={(e) => validateError("state",e.target.value)}
->
-                                            <option value="">Select State</option>
-                                            <option value="test1">Test 1</option>
-                                        </Select>
+                                        <Input placeholder="Select State" value={inputs.state}
+  onChange={(e) => validateError("state",e.target.value)}/>
                                         {errors.state  && ( <Errors>{errors.state }</Errors>  )}
                                     </div>
                                         <div className="mb-8">
@@ -279,7 +280,7 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
                                 </tr>
                                 <tr>
                                     <th className="text-left text-[#666666] text-[20px] font-normal py-1 pb-3">{prices.taxFee.label}</th>
-                                    <td className="text-right text-[#1a1a1a] text-[20px] font-normal py-1 pb-3">${prices.taxFee.price.toFixed(2)}</td>
+                                    <td className="text-right text-[#1a1a1a] text-[20px] font-normal py-1 pb-3">${taxPrice.toFixed(2)}</td>
                                 </tr>
                                 </tbody>
                                 <tfoot>
@@ -301,7 +302,7 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
                     </div>
                 </div>
             </div>
-           
+          
         </div>
     );
 }
