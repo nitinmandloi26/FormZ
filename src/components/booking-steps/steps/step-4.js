@@ -80,7 +80,9 @@ const Step4Form  = ({hero,booking,priceBreakdown,paymentInformation,formData,han
         setLoading(true);
 
       try {
-    const res = await fetch("/api/create-payment-intent", {
+    const baseUrl =
+  process.env.NEXT_PUBLIC_BASE_URL || ""; 
+    const res = await fetch(`${baseUrl}/form27/api/create-payment-intent`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount: Number(Math.round(formData?.totalPrice * 100)) }),
@@ -366,7 +368,7 @@ const Step4Form  = ({hero,booking,priceBreakdown,paymentInformation,formData,han
             
         </div>
     );
-}
+} 
 
 export default function Step4(props) {
   return (
