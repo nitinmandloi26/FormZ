@@ -88,6 +88,10 @@ const Step4Form  = ({hero,booking,priceBreakdown,paymentInformation,formData,han
       body: JSON.stringify({ amount: 600 }),
     });
 
+    const text = await res.text();
+console.log(text);
+
+
     const data = await res.json();
     console.log("👉 Backend response:", data);
 
