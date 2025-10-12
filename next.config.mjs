@@ -1,19 +1,20 @@
 /** @type {import('next').NextConfig} */
-const isProd = process.env.NODE_ENV === "production";
-
 const nextConfig = {
-  // On Vercel, do NOT export static HTML; use SSR/SSG
-  // Remove output: "export" for full Next.js capabilities
-  // output: "export",
-
-  // basePath and assetPrefix are not needed on Vercel
-  // basePath: isProd ? "/FormZ" : "",
-  // assetPrefix: isProd ? "/FormZ/" : "",
-
-  reactStrictMode: true,
+  output: "export",       // for static export
+  basePath: "/FormZ",     // all pages will be served under /FormZ
+  assetPrefix: "/FormZ/", // ensures CSS, JS, images load correctly
   images: {
-    unoptimized: true, // optional, only if you want no image optimization
+    unoptimized: true,    // required for static export
+  },
+  async redirects() {     // optional: redirect root to /FormZ
+    return [
+      {
+        source: "/",
+        destination: "/FormZ",
+        permanent: true,
+      },
+    ];
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
