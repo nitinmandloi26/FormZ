@@ -1,17 +1,23 @@
+// next.config.mjs
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",
-  basePath: "/FormZ",      // all pages are under /FormZ
-  assetPrefix: "",          // remove /FormZ from static files
+  reactStrictMode: true,
+  swcMinify: true,
+  output: "export",       // for static export
   images: {
-    unoptimized: true,
+    unoptimized: true,    // needed for static export
   },
-  async redirects() {
+  // Optional: headers example
+  async headers() {
     return [
       {
-        source: "/",
-        destination: "/FormZ",
-        permanent: true,
+        source: "/(.*)",
+        headers: [
+          {
+            key: "X-Frame-Options",
+            value: "SAMEORIGIN",
+          },
+        ],
       },
     ];
   },
