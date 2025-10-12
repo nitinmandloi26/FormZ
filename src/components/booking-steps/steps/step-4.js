@@ -83,7 +83,7 @@ const Step4Form  = ({hero,booking,priceBreakdown,paymentInformation,formData,han
     const res = await fetch("/api/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: Math.round(formData?.totalPrice * 100) }),
+      body: JSON.stringify({ amount: Number(Math.round(formData?.totalPrice * 100)) }),
     });
 
     const data = await res.json();
@@ -363,7 +363,7 @@ const Step4Form  = ({hero,booking,priceBreakdown,paymentInformation,formData,han
                     </div>
                 </div>
             </div>
-            {JSON.stringify(formData,null,2)}
+            
         </div>
     );
 }
