@@ -82,7 +82,7 @@ const Step4Form  = ({hero,booking,priceBreakdown,paymentInformation,formData,han
         setLoading(true);
 
       try {
-    const res = await fetch("/form27/api/create-payment-intent", {
+    const res = await fetch("/api/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount: Number(Math.round(formData?.totalPrice * 100)) }),
