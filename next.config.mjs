@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export",       // for static export
-  basePath: "/FormZ",     // all pages will be served under /FormZ
-  assetPrefix: "/FormZ/", // ensures CSS, JS, images load correctly
+  output: "export",
+  basePath: "/FormZ",      // all pages are under /FormZ
+  assetPrefix: "",          // remove /FormZ from static files
   images: {
-    unoptimized: true,    // required for static export
+    unoptimized: true,
   },
-  async redirects() {     // optional: redirect root to /FormZ
+  async redirects() {
     return [
       {
         source: "/",
