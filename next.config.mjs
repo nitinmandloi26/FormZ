@@ -2,8 +2,8 @@
 const isProd = process.env.NODE_ENV === "production";
 const nextConfig = {
   output: "export",
-  basePath: isProd ? "/form27" : "",      // repo name
-  assetPrefix: isProd ? "/form27/" : "",  // makes static assets load
+  basePath: isProd ? "" : "",      // repo name
+  assetPrefix: isProd ? "" : "",  // makes static assets load
   images: {
     unoptimized: true,     // <-- important for GitHub Pages
   },
