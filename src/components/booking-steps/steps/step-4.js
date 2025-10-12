@@ -5,7 +5,9 @@ import { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, useStripe, useElements, CardElement,} from "@stripe/react-stripe-js";
 import Image from "next/image";
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY, {
+  advancedFraudSignals: false, // disables the r.stripe.com beacon
+});
 const Step4Form  = ({hero,booking,priceBreakdown,paymentInformation,formData,handleChange,nextStep, prevStep}) => {
     const stripe = useStripe();
     const elements = useElements();
