@@ -1,25 +1,18 @@
-// next.config.mjs
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === "production";
+
 const nextConfig = {
+  // On Vercel, do NOT export static HTML; use SSR/SSG
+  // Remove output: "export" for full Next.js capabilities
+  // output: "export",
+
+  // basePath and assetPrefix are not needed on Vercel
+  // basePath: isProd ? "/FormZ" : "",
+  // assetPrefix: isProd ? "/FormZ/" : "",
+
   reactStrictMode: true,
-  swcMinify: true,
-  output: "export",       // for static export
   images: {
-    unoptimized: true,    // needed for static export
-  },
-  // Optional: headers example
-  async headers() {
-    return [
-      {
-        source: "/(.*)",
-        headers: [
-          {
-            key: "X-Frame-Options",
-            value: "SAMEORIGIN",
-          },
-        ],
-      },
-    ];
+    unoptimized: true, // optional, only if you want no image optimization
   },
 };
 
