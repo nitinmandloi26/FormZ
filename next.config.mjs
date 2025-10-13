@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
-const isProd = process.env.NODE_ENV === "production";
+const isVercel = process.env.VERCEL === "1";
 
 const nextConfig = {
   output: "export",
-  basePath: "",
-  assetPrefix: "",
+  basePath: isVercel ? "" : "/FormZ",
+  assetPrefix: isVercel ? "" : "/FormZ/",
   images: {
     unoptimized: true,
   },
