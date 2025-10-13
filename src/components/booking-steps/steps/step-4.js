@@ -89,7 +89,7 @@ const Step4Form  = ({hero,booking,priceBreakdown,paymentInformation,formData,han
     });
 
     const data = await res.json();
-    console.log("👉 Backend response:", data);
+    
 
     if (!data.clientSecret) {
       throw new Error("Missing clientSecret from backend response.");

@@ -31,13 +31,25 @@ export async function POST(req) {
       receipt_email: "nitinmandloi26@gmail.com",
     });
 
-    console.log("✅ PaymentIntent created:", paymentIntent.id);
+    
 
-    return Response.json({
-      clientSecret: paymentIntent.client_secret,
-    });
+    return new Response(
+      JSON.stringify({ clientSecret: paymentIntent.client_secret }),
+      { status: 200, headers: { "Content-Type": "application/json" } }
+    );
+
   } catch (err) {
     console.error("❌ Stripe Error:", err);
-    return Response.json({ error: err.message }, { status: 400 });
+    return new Response(
+      JSON.stringify({ error: error.message || "Internal Server Error" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
+}
+
+export async function GET() {
+  return new Response(
+    JSON.stringify({ message: "Method not allowed, use POST" }),
+    { status: 405, headers: { "Content-Type": "application/json" } }
+  );
 }
