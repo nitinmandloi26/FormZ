@@ -146,7 +146,7 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
                   <Image className="absolute right-5 top-1/2  -translate-y-1/2 w-4 h-4 md:w-6 md:h-6" src={`images/services/calender.svg`} width={24} height={24} alt="Calender" />
                   </div>
                   {showCalendar && (
-                    <div className="absolute top-[75px] left-0 z-50 bg-white w-full border rounded-2xl p-6 border-[#E5E7EB]">
+                    <div className="absolute top-[75px] left-0 z-50 bg-white w-full border rounded-2xl p-4 md:p-6 border-[#E5E7EB]">
                       <Calendar 
                       tileClassName={({ date, view }) => {
                         if (view === "month" && date < tomorrow.setHours(0, 0, 0, 0)) {

@@ -333,11 +333,11 @@ useEffect(() => {
                                     <td className="text-right text-[#1a1a1a] text-[20px] font-normal py-1">${serviceFee.toFixed(2)}</td>
                                 </tr>
                                 <tr>
-                                    <th className="text-left text-[#666666] text-[20px] font-normal py-1">{prices.plateformFee.label}</th>
+                                    <th className="text-left text-[#666666] text-[20px] font-normal py-1">{prices.plateformFee.label} </th>
                                     <td className="text-right text-[#1a1a1a] text-[20px] font-normal py-1">${prices.plateformFee.price.toFixed(2)}</td>
                                 </tr>
                                 <tr>
-                                    <th className="text-left text-[#666666] text-[20px] font-normal py-1 pb-3">{prices.taxFee.label}</th>
+                                    <th className="text-left text-[#666666] text-[20px] font-normal py-1 pb-3">{prices.taxFee.label} ({prices.taxFee.price}%)</th>
                                     <td className="text-right text-[#1a1a1a] text-[20px] font-normal py-1 pb-3">${taxPrice.toFixed(2)}</td>
                                 </tr>
                                 </tbody>

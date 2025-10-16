@@ -15,7 +15,7 @@ const customerDetailConfig = {
         },
         taxFee:{
             label:"Tax",
-            price: 8.25
+            price: 5
         },
         totalPrice:{
             label:"Total",
