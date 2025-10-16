@@ -12,6 +12,6 @@ const errors = tv({
     }
 });
 
-export const Errors = ({variant,children,className}) => {
-    return <p className={errors({variant,className})}>{children}</p>;
+export const Errors = ({variant,children,className,...props}) => {
+    return <p className={errors({variant,className})} {...props}>{children}</p>;
 }

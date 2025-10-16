@@ -3,7 +3,7 @@
 const homeConfig = {
   heroSection: {
     hero:{
-      heading: "Professional at Your Fingertips",
+      heading: "Spotless Cleaning, Just a Click Away",
       content:
       "Book trusted cleaning professionals for your home, office, or business. Simply choose your service, pick a time, and enjoy spotless results.",
       buttonLabel: "Book Now",
@@ -14,8 +14,8 @@ const homeConfig = {
       text: "No credit card needed",
     },
     image:{
-      desktop:"images/calc-1.png",
-      mobile:"images/calc-1-mob.png"
+      desktop:"images/home-img-1.png",
+      mobile:"images/home-img-11.png"
     },
     steps:{
       heading: "A Simpler Way to Book Cleaning",

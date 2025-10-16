@@ -9,7 +9,6 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
   const locationRef = useRef(null);
   const autocompleteRef = useRef(null);
 
-
   const handleClick = (service, index) => {
     handleChange({service: { index, service } });
     if(errors.service){
@@ -23,8 +22,9 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
       setTimeout(() => locationRef.current.focus(), 350);
     }
   }, [formData?.service]); 
-
+  
   const handleFrequency = (option,index) => {
+    const befFerq = formData.frequency?.index;
     handleChange({frequency: { index, option } });
     if(errors.frequency){
       setErrors((prev) => ({...prev, frequency:""}));
@@ -44,10 +44,7 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
     }
     setErrors(newErrors);
     if (!newErrors.service && !newErrors.frequency && !newErrors.location) {
-      const today = new Date();
-      const tomorrow = new Date(today);
-       tomorrow.setDate(today.getDate() + 1);
-        handleChange({booking: [{date: tomorrow, timeSlot: null,slotIndex: null}] });
+        formData.booking = [];
         if (nextStep) nextStep();
     }
 
@@ -56,12 +53,12 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
   return (
     <div className="w-full py-6 md:py-15 justify-center items-center">
       <div className="max-w-7xl mx-auto px-5.5 md:px-4">
+        
         {/* Hero Section */}
         <div className="text-center mb-6 md:mb-12">
           <Heading level={1} className={`mb-3 md:mb-5`}>{hero.heading}</Heading>
           <Content className={`max-w-[325px] md:max-w-[830px] mb-1.5 mx-auto md:mb-0`}>{hero.content}</Content>
         </div>
-
         {/* Services Grid */}
         <div className="">
           <div className="mb-4 md:mb-10">
@@ -79,7 +76,7 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
                 >
                   <div className="flex flex-col gap-3 md:gap-4.5">
                     {/* Header */}
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3 md:gap-4.75">
                         <span className="w-12 h-12 md:w-15 md:h-15 rounded-full bg-[#F0F0F0] flex items-center justify-center">
                           <Image
@@ -90,6 +87,7 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
                             alt={service.title}
                           />
                         </span>
+                        <div className="">
                         <h3
                           className={`text-[20px] md:text-[22px] font-semibold ${
                             isActive ? "text-[#fff]" : "text-[#1A1A1A]"
@@ -97,8 +95,12 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
                         >
                           {service.title}
                         </h3>
+                        <span className={`text-[#1a1a1a] text-[18px] font-bold ${
+                            isActive ? "text-[#fff]" : "text-[#1A1A1A]"
+                          }`}>${service.price.toFixed(2)}</span>
+                        </div>
                       </div>
-                      <span className="w-5 h-5 md:w-7 md:h-7 rounded-full border-1 border-[#E5E5E5]" />
+                      <span className="w-5 h-5 md:w-7 md:h-7 mt-1 rounded-full border-1 border-[#E5E5E5]" />
                     </div>
 
                     {/* Content */}
@@ -145,6 +147,7 @@ const Step1 = ({ hero, services, fields,errorMsg, formData, handleChange, nextSt
                   city: place.city,
                   state: place.state,
                   country: place.country,
+                  countrycode: place.countrycode,
                   postcode: place.postcode,
                   fullAddress: place.fullAddress
                 } });

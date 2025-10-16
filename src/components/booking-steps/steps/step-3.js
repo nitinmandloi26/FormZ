@@ -2,10 +2,27 @@
 import { useState, useEffect } from "react";
 import { Heading, Content, Label, Button, formatDate, Errors, Input, Select,TextArea  } from "@/components/ui";
 import Image from "next/image";
+import fetchCountry from "@/components/countries";
+const validatePostcodeAPI = async (countryCode, postcode) => {
+  try {
+    const res = await fetch(
+      `http://api.geonames.org/postalCodeLookupJSON?postalcode=${encodeURIComponent(postcode)}&country=${countryCode}&username=nitinmandloi`
+    );
+    if (!res.ok) return false;
+    const data = await res.json();
+    return data.postalcodes && data.postalcodes.length > 0;
+  } catch {
+    return false;
+  }
+};
+
 const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevStep }) => {
+
     const serviceFee = formData.serviceFee || 0;
     const taxPrice =  serviceFee * prices.taxFee.price / 100;
     const totalPrice = serviceFee + prices.plateformFee.price + taxPrice;
+   
+    const [countries, setCountries] = useState([]);
     const [errors, setErrors] = useState({});
     const [inputs, setInputs] = useState({
     firstName:formData?.firstName || "",
@@ -15,6 +32,8 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
     street: formData?.location?.street || "",
     city: formData?.location?.city || "",
     state: formData?.location?.state || "",
+    country:formData?.location?.country || "",
+    countrycode:formData?.location?.countrycode || "",
     zip: formData?.location?.postcode || "",
     apartment: formData?.apartment || "",
     notes: formData?.notes || "",
@@ -30,90 +49,115 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
   handleChange({ ...inputs });
 }, [inputs]); // <- always provide dependency array
 
- const validateField = (name, value) => {
+useEffect(() => {
+    const loadCountries = async () => {
+      const data = await fetchCountry();
+      setCountries(data);
+    };
+    loadCountries();
+  }, []);
+
+ const validateField = async (name, value) => {
     let error = "";
 
     switch (name) {
       case "firstName":
-        if (!value.trim()) return error = "First name is required";
+        if (!value.trim()) error = "First name is required";
         break;
       case "lastName":
-        if (!value.trim()) return error = "Last name is required";
+        if (!value.trim()) error = "Last name is required";
         break;
       case "email":
-        if (!value.trim()) return error = "Email is required";
-        else if (!/\S+@\S+\.\S+/.test(value)) return error = "Invalid email format";
+        if (!value.trim()) error = "Email is required";
+        else if (!/\S+@\S+\.\S+/.test(value)) error = "Invalid email format";
         break;
       case "phone":
-        if (!value.trim()) return error = "Phone number is required";
-        else if (!/^\+?\d{7,15}$/.test(value)) return error = "Invalid phone number";
+        if (!value.trim()) error = "Phone number is required";
+        else if (!/^\+?\d{7,15}$/.test(value))
+          error = "Invalid phone number";
+        break;
+      case "countrycode":
+        if (!value.trim()) error = "Country is required";
         break;
       case "street":
-        if (!value.trim()) return error = "Street address is required";
+        if (!value.trim()) error = "Street address is required";
         break;
       case "city":
-        if (!value.trim()) return error = "City is required";
+        if (!value.trim()) error = "City is required";
         break;
       case "state":
-        if (!value.trim()) return error = "State is required";
+        if (!value.trim()) error = "State is required";
         break;
       case "zip":
-        if (!value.trim()) return error = "ZIP code is required";
-        else if (!/^\d{4,10}$/.test(value)) return error = "Invalid ZIP code";
+        if (!value.trim()) error = "Zip is required";
+        else {
+          const valid = await validatePostcodeAPI(inputs.countrycode, value);
+          if (!valid) error = "Invalid postcode";
+        }
         break;
       case "propertyType":
-        if (!value.trim()) return error = "Please select a property type.";
+        if (!value.trim()) error = "Please select a property type.";
         break;
       default:
         break;
-    }
+    } 
+    return error;
+}
 
-  };
 
-  const validateError = (name,value) => { 
+  const validateError = async (name,value) => { 
     setInputs({ ...inputs, [name]: value });
-    setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
+    const error = await validateField(name, value);
+    if (name === "countrycode" && inputs.zip) {
+      const valid = await validatePostcodeAPI(value, inputs.zip);
+      setErrors((prev) => ({
+        ...prev,
+        zip: valid ? "" : "Invalid postcode",
+      }));
+    }
+    setErrors((prev) => ({ ...prev, [name]: error }));
   }
 
 
   // 🔘 Validate all fields before payment
- const handlePayment = () => {
-  const requiredFields = [
-    "firstName",
-    "lastName",
-    "email",
-    "phone",
-    "street",
-    "city",
-    "state",
-    "zip",
-    "propertyType",
-  ];
+ const handlePayment = async () => {
+    const requiredFields = [
+      "firstName",
+      "lastName",
+      "email",
+      "phone",
+      "street",
+      "city",
+      "state",
+      "countrycode",
+      "zip",
+      "propertyType",
+    ];
 
-  const newErrors = {};
+    const newErrors = {};
 
-  requiredFields.forEach((field) => {
-    const value = inputs[field];
-    let error = "";
-    error = validateField(field, value);   
-    if (error) {
-      newErrors[field] = error; // collect errors
+    for (const field of requiredFields) {
+      const value = inputs[field];
+      const error = await validateField(field, value);
+      if (error) newErrors[field] = error;
     }
-  });
 
-  setErrors(newErrors);
+    setErrors(newErrors);
 
-  // stop if any errors exist
-  if (Object.keys(newErrors).length > 0) return;
+    if (Object.keys(newErrors).length > 0) {
+      console.warn("Validation failed:", newErrors);
+      return;
+    }
 
-  // proceed to next step
-  handleChange({ ...inputs });
-  nextStep();
-};
+    // ✅ Continue if no errors
+    handleChange({ ...inputs });
+    nextStep();
+  };
+
     
     return(
         <div className="w-full py-6 md:py-15 justify-center items-center">
-            <div className="max-w-[1332px] mx-auto px-5.5 md:px-4">
+            <div className="max-w-7xl mx-auto px-5.5 md:px-4">
                 <div className="text-center mb-6 md:mb-12">
                     <Heading level={1} className={`mb-3 md:mb-5`}>{hero.heading}</Heading>
                     <Content className={`max-w-[325px] md:max-w-[830px] mb-1.5 mx-auto md:mb-0 italic`}>{hero.content}</Content>
@@ -153,6 +197,20 @@ const Step3 = ({hero,propertyType,prices,formData,handleChange,nextStep, prevSte
                         </div>
                         <div className="mb-5">
                             <Heading level={3} size={4} className={`mb-7`}>Service Address</Heading>
+                            <div className="mb-8">
+                                <Label>Country</Label>
+                                
+                                <Select value={inputs.countrycode}
+  onChange={(e) => validateError("countrycode",e.target.value)}>
+                                    <option value="">Select Country</option>
+                                    {countries.map((c, i) => (
+                                        <option key={i} value={c.code}>
+                                            {c.name}
+                                        </option>
+                                    ))}
+                                </Select>
+         {errors.countrycode  && ( <Errors>{errors.countrycode }</Errors>  )}
+                            </div>
                                 <div className="mb-8">
                                     <Label>Street Address *</Label>
                                     <Input placeholder="123 Main Street" value={inputs.street}

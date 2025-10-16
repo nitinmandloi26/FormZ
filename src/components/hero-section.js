@@ -12,7 +12,7 @@ const HeroSection = ({hero, card, image, steps}) => {
                         <Image src={card.img} width={22} height={20} className="max-w-[13px] md:max-w-[22px]" alt="credit card" />
                         <span className="text-xs md:text-base">{card.text}</span>
                     </div>
-                    <Image className="hidden md:block" src={image.desktop} width={1024} height={400} alt="Calc"/>
+                    <Image className="hidden md:block rounded-2xl" src={image.desktop} width={1024} height={400} alt="Calc"/>
                     <Image className="md:hidden block" src={image.mobile} width={396} height={399} alt="Calc Mob"/>
                 </div>
 

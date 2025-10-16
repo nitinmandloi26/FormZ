@@ -58,19 +58,23 @@ const serviceConfig = {
             options:[
                 {
                     label:"One-time",
-                    value:"Multi-Date Booking"
+                    value:"Multi-Date Booking",
+                    name:"One Time/Multi-Date Cleaning"
                 },
                 {
                     label:"Weekly",
-                    value:"Every week"
+                    value:"Every week",
+                    name:"Every Week Cleaning"
                 },
                 {
                     label:"Bi-weekly",
-                    value:"Every 2 weeks"
+                    value:"Every 2 weeks",
+                    name:"Bi-Weekly Cleaning"
                 },
                 {
                     label:"Monthly",
-                    value:"Once a month"
+                    value:"Once a month",
+                    name:"Monthly Cleaning"
                 }
             ]
         },

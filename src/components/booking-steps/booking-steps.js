@@ -55,11 +55,13 @@ const prevStep = () => {
             transition={{ duration: 0.6 }}
             className="w-full"
           >
-                <Step1 {...serviceConfig} 
+
+           <Step1 {...serviceConfig} 
                 formData={formData}
                 handleChange={handleChange}
                 nextStep={nextStep}
                 />
+               
             </motion.div>
              )}
              {step === 2 && (
@@ -128,12 +130,15 @@ const prevStep = () => {
             transition={{ duration: 0.5 }}
             className="w-full"
           >
-                <Step5 {...bookingConfirmConfig} 
+
+             <Step5 {...bookingConfirmConfig} 
                 formData={formData}
                 handleChange={handleChange}
                 nextStep={nextStep}
                 prevStep={prevStep} 
                 />
+             
+                
             </motion.div>
              )}
              </AnimatePresence>
