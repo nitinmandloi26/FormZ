@@ -105,8 +105,8 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
           <Heading level={1} className={`mb-3 md:mb-5`}>{hero.heading}</Heading>
           <Content className={`max-w-[325px] md:max-w-[830px] mb-1.5 mx-auto md:mb-0`}>{hero.content}</Content>
         </div>
-        <div className="grid grid-cols-[1.55fr_repeat(1,1fr)] gap-10">
-          <div className="border-1 border-[#E5E7EB] shadow-[0px_4px_12px_0px_#0000001A] rounded-[23px] p-8 grid grid-cols-1 gap-7">
+        <div className="grid grid-cols-1 md:grid-cols-[1.55fr_repeat(1,1fr)] gap-10">
+          <div className="border-1 border-[#E5E7EB] shadow-[0px_4px_12px_0px_#0000001A] rounded-[23px] p-6 md:p-8 grid grid-cols-1 gap-4 md:gap-7">
           {formData?.frequency?.option?.label === "One-time" && (
           <Calendar 
           tileClassName={({ date, view }) => {
@@ -142,8 +142,8 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
                   <Input id="start_date"  
                   value = {formatDate2(startDate)}
                   onClick={() => setShowCalendar(!showCalendar)}
-                  placeholder="mm/dd/yyyy" className={`placeholder:text-[#1a1a1a]`} readOnly/>
-                  <Image className="absolute right-5 top-1/2  -translate-y-1/2" src={`images/services/calender.svg`} width={24} height={24} alt="Calender" />
+                  placeholder="mm/dd/yyyy" className={`placeholder:text-[#1a1a1a] text-[14px] md:text-[18px]`} readOnly/>
+                  <Image className="absolute right-5 top-1/2  -translate-y-1/2 w-4 h-4 md:w-6 md:h-6" src={`images/services/calender.svg`} width={24} height={24} alt="Calender" />
                   </div>
                   {showCalendar && (
                     <div className="absolute top-[75px] left-0 z-50 bg-white w-full border rounded-2xl p-6 border-[#E5E7EB]">
@@ -176,19 +176,19 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
             </div>
           )}
           
-          <div className="grid grid-cols-1 gap-4 pt-7 border-t border-[#1a1a1a]">
+          <div className="grid grid-cols-1 gap-2 md:gap-4 pt-5 md:pt-7 border-t border-[#1a1a1a]">
             <Heading level={4} size={3}> Select Available Time for   {currentDate ? formatDate(currentDate, false, false) : ""}</Heading>
-            <div className="grid grid-cols-4 gap-2.5">
+            <div className="grid grid-cols-4 gap-1.5 md:gap-2.5">
               {slots?.timeslots?.map((timeslot,index) => {  
                 const isBooked = timeslot.check === "booked"; 
                 const isActive = currentIndex  === index;
                 return (
                   <div key={index} 
                     onClick={() => !isBooked && hadleTimeClick(timeslot,index)}
-                    className={` border  border-[#E5E5E5] rounded-[14px] p-2 text-center 
+                    className={` border  border-[#E5E5E5] rounded-[4px] md:rounded-[14px] p-1 md:p-2 text-center 
                         ${isActive ? "bg-[#D1D5DB] text-[#1a1a1a] " : "bg-[#1a1a1a] text-[#D1D5DB] hover:bg-neutral-700"}
                         ${isBooked ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}>
-                     <span className={`block text-[16px] font-medium`}>{timeslot.time}</span>
+                     <span className={`block text-[8px] md:text-[16px] font-medium`}>{timeslot.time}</span>
                   </div>
                 );
               })}
@@ -221,11 +221,11 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
             <div className="grid grid-cols-1 gap-5 mb-4.75">
               {[...(formData?.booking || [])].reverse().map((b, idx) => ( 
                 <div key={idx} className="bg-[#F9FAFB] rounded-[10px] p-5 relative group duration-200">
-                  <div className="flex justify-between items-center mb-2.5">
-                    <span className="text-[#1a1a1a] text-[20px] font-semibold">{formatDate(b.date)}</span>
-                    <span className="text-[#1a1a1a] text-[20px] font-medium">{b?.timeSlot?.time}</span>
+                  <div className="flex justify-between items-center mb-1.5 md:mb-2.5">
+                    <span className="text-[#1a1a1a] text-[16px] md:text-[20px] font-semibold">{formatDate(b.date)}</span>
+                    <span className="text-[#1a1a1a] text-[16px] md:text-[20px] font-medium">{b?.timeSlot?.time}</span>
                   </div>
-                  <h4 className="text-[18px] font-normal text-[#666666]">{formData?.service?.service.title}</h4>
+                  <h4 className="text-[14px] md:text-[18px] font-normal text-[#666666]">{formData?.service?.service.title}</h4>
                   <div className="absolute right-[-6px] top-[-6px] opacity-0 z-[-1] group-hover:opacity-100 group-hover:z-[1] duration-200">
                     <span className="" onClick={() => removeBooking(formData.booking.length - 1 - idx)} title="Remove">
                       <Image className="bg-[#1a1a1a] cursor-pointer rounded-full p-1.5" src={`images/services/cross.svg`} width={25} height={25} alt="Cross"/>
@@ -236,8 +236,8 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
             </div>
             <div className="border-t border-[#E5E7EB] pt-6">
               <Button type="button" onClick={prevStep} variant={`lightGray`} className={`border border-[#E5E5E5] block w-full md:text-[19px]`}>Back to Services</Button>
-              <Button type="button" className={`block w-full md:text-[19px] mt-5`} onClick={handleCheckout}>Proceed to Booking</Button>
-              <h6 className="text-center text-[#666666] text-[15px] font-normal mt-5">You can review details on the next step.</h6>
+              <Button type="button" className={`block w-full md:text-[19px] mt-3 md:mt-5`} onClick={handleCheckout}>Proceed to Booking</Button>
+              <h6 className="text-center text-[#666666] text-[13px] md:text-[15px] font-normal mt-5">You can review details on the next step.</h6>
             </div>
           </div>
         </div>

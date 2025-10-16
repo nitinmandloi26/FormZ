@@ -6,7 +6,7 @@ import fetchCountry from "@/components/countries";
 const validatePostcodeAPI = async (countryCode, postcode) => {
   try {
     const res = await fetch(
-      `http://api.geonames.org/postalCodeLookupJSON?postalcode=${encodeURIComponent(postcode)}&country=${countryCode}&username=nitinmandloi`
+      `https://secure.geonames.org/postalCodeLookupJSON?postalcode=${encodeURIComponent(postcode)}&country=${countryCode}&username=nitinmandloi`
     );
     if (!res.ok) return false;
     const data = await res.json();

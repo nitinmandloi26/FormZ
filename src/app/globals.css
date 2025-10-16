@@ -26,11 +26,11 @@ body {
 }
 
 .react-calendar__navigation__label__labelText{
-  @apply text-[22px] font-semibold text-[#1A1A1A] font-sans;
+  @apply text-[12px] md:text-[22px] font-semibold text-[#1A1A1A] font-sans;
 }
 
 .react-calendar__month-view__weekdays__weekday {
-  @apply text-[#666666] text-[16px] font-medium font-sans capitalize min-h-13.5 justify-center items-center flex;
+  @apply text-[#666666] md:text-[16px] text-[8px]  font-medium font-sans capitalize min-h-6 md:min-h-13.5 justify-center items-center flex;
 }
 
 .react-calendar__month-view__weekdays__weekday abbr{
@@ -38,20 +38,20 @@ body {
 }
 
 .react-calendar__tile{
-  @apply text-[#1A1A1A] text-[18px] font-normal font-sans;
+  @apply text-[#1A1A1A] text-[9px] md:text-[18px] font-normal font-sans;
 }
 
 .react-calendar__tile abbr{
-  @apply w-10 h-10 flex items-center justify-center mx-auto;
+  @apply w-6 h-6 md:w-10 md:h-10 flex items-center justify-center mx-auto;
 }
 
 
 .react-calendar__navigation{
-  @apply flex mb-7;
+  @apply flex mb-4 md:mb-7;
 }
 
 .react-calendar__month-view__weekdays{
-  @apply text-center gap-2.25;
+  @apply text-center gap-1 md:gap-2.25;
 }
 
 .react-calendar__tile--active abbr{
@@ -59,11 +59,18 @@ body {
 }
 
 .react-calendar__month-view__weekdays__weekday,.react-calendar__month-view__days__day{
-  flex: 1 0 calc(14.2857% - 9px) !important;
+  flex: 1 0 calc(14.2857% - 4px) !important;
 }
 
+@media(min-width: 48rem){
+.react-calendar__month-view__weekdays__weekday,.react-calendar__month-view__days__day{
+  flex: 1 0 calc(14.2857% - 9px) !important;
+}
+}
+
+
 .react-calendar__month-view__days{
- @apply gap-2.5;
+ @apply gap-1 md:gap-2.5;
 }
 
 .react-calendar__navigation__label{
@@ -71,7 +78,7 @@ body {
 }
 
 .react-calendar__navigation__prev-button{
-  @apply order-2 mr-8;
+  @apply order-2 mr-6 md:mr-8;
 }
 
 .react-calendar__navigation__next-button{
@@ -100,4 +107,8 @@ body {
 
 .react-calendar__month-view__days__day--neighboringMonth,.react-calendar__month-view__days__day--neighboringMonth.react-calendar__tile[disabled]{
   @apply opacity-0;
+}
+
+.react-calendar__navigation__arrow svg{
+  @apply w-1.5 h-2.5 md:w-2.5 md:h-4;
 }
