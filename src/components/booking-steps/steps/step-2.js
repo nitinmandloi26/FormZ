@@ -14,11 +14,13 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
   tomorrow.setDate(today.getDate() + 1);
   
   const [currentDate, setCurrentDate] = useState(tomorrow);
+  const [startDate, setStartDate] = useState(null);
   const [currentSlot, setCurrentSlot] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(null);
   const [serviceFee, setServiceFee] = useState(0);
   const errorRef = useRef(null);
-
+  
+  
   
   const bookings = formData.booking || [];
   
@@ -36,6 +38,7 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
 
   const recurringDateHandle = (date) => {
      setCurrentDate(date);
+     setStartDate(date);
      setShowCalendar(false);
   }
   
@@ -137,7 +140,7 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
                 <div className="relative">
                   <div className="relative">
                   <Input id="start_date"  
-                  value = {formatDate2(currentDate)}
+                  value = {formatDate2(startDate)}
                   onClick={() => setShowCalendar(!showCalendar)}
                   placeholder="mm/dd/yyyy" className={`placeholder:text-[#1a1a1a]`} readOnly/>
                   <Image className="absolute right-5 top-1/2  -translate-y-1/2" src={`images/services/calender.svg`} width={24} height={24} alt="Calender" />
@@ -174,7 +177,7 @@ const Step2 = ({hero,slots, errorMsg, formData, handleChange, nextStep, prevStep
           )}
           
           <div className="grid grid-cols-1 gap-4 pt-7 border-t border-[#1a1a1a]">
-            <Heading level={4} size={3}> Select Available Time for {formatDate(currentDate, false, false)}</Heading>
+            <Heading level={4} size={3}> Select Available Time for   {currentDate ? formatDate(currentDate, false, false) : ""}</Heading>
             <div className="grid grid-cols-4 gap-2.5">
               {slots?.timeslots?.map((timeslot,index) => {  
                 const isBooked = timeslot.check === "booked"; 
